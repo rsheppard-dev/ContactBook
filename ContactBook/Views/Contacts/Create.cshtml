@@ -1,0 +1,101 @@
+@model ContactBook.Models.Contact
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CREATE CONTACT</h1>
+<div class="p-3 border border-2 shadow-lg bg-light">
+    <form asp-action="Create" asp-controller="Contacts" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row g-3 p-2">
+            <div class="col-12 col-lg-4">
+                <div class="square-img-container">
+                    <img id="contact-image" class="square-img" src="/img/DefaultContactImage.png" alt="Contact Photo">
+                </div>
+                <div>
+                    <input asp-for="ImageFile" class="form-control" accept=".png,.jpg,.jpeg,.gif" onchange="document.getElementById('contact-image').src= window.URL.createObjectURL(this.files[0])" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-8">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <label asp-for="FirstName" class="form-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="col-12 col-lg-6">
+                        <label asp-for="LastName" class="form-label"></label>
+                        <input asp-for="LastName" class="form-control"/>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control"/>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="Phone" class="form-label"></label>
+                            <input asp-for="Phone" class="form-control"/>
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    
+                        <div class="col-12 mt-2">
+                            <label asp-for="Address1" class="form-label"></label>
+                            <input asp-for="Address1" class="form-control"/>
+                            <span asp-validation-for="Address1" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <label asp-for="Address2" class="control-label"></label>
+                            <input asp-for="Address2" class="form-control"/>
+                            <span asp-validation-for="Address2" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="City" class="form-label"></label>
+                            <input asp-for="City" class="form-control"/>
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-4 mt-2">
+                            <label asp-for="County" class="form-label"></label>
+                            <input asp-for="County" class="form-control"/>
+                            <span asp-validation-for="County" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-2 mt-2">
+                            <label asp-for="PostCode" class="form-label"></label>
+                            <input asp-for="PostCode" class="form-control"/>
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
+                    
+                        <div class="col-12 col-lg-6 mt-3">
+                            <label asp-for="Categories" class="form-label">Categories</label>
+                            <select name="CategoryList" class="form-select" asp-items="ViewBag.CategoryList" multiple>
+                            </select>
+                        </div>
+                    
+                        <div class="col-12 col-lg-6 mt-3">
+                            <label asp-for="BirthDate" class="form-label"></label>
+                            <input asp-for="BirthDate" class="form-control"/>
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+                    
+                        <div class="col-12 d-flex justify-content-end mt-2">
+                            <button type="submit" class="btn btn-lg btn-primary rounded-pill">Save</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

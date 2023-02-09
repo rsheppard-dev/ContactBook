@@ -12,12 +12,12 @@ public class Contact
     
     [Required]
     [Display(Name = "First Name")]
-    [StringLength(50, ErrorMessage = "The {0) must be between {2} and {1} characters long.", MinimumLength = 2)]
+    [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
     public string? FirstName { get; set; }
     
     [Required]
     [Display(Name = "Last Name")]
-    [StringLength(50, ErrorMessage = "The {0) must be between {2} and {1} characters long.", MinimumLength = 2)]
+    [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
     public string? LastName { get; set; }
     
     [NotMapped]
@@ -31,8 +31,10 @@ public class Contact
     public DateTime? BirthDate { get; set; }
     
     [Required]
+    [Display(Name = "Address Line 1")]
     public string? Address1 { get; set; }
     
+    [Display(Name = "Address Line 2")]
     public string? Address2 { get; set; }
     
     [Required]
@@ -67,5 +69,5 @@ public class Contact
     
     // virtuals
     public virtual AppUser? AppUser { get; set; }
-    public virtual ICollection<Category> Catorgories { get; set; } = new HashSet<Category>();
+    public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
 }

@@ -54,6 +54,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Contacts" asp-action="Index">Contacts</a>
                         </li>
                     }
+
                 </ul>
                 <partial name="_LoginPartial"/>
             </div>
@@ -62,12 +63,12 @@
 </header>
 
 <main class="content" id="mainHero">
-    <section class="container  h-100">
+    <section class="container-fluid  h-100">
         @RenderBody()
     </section>
 </main>
 
-<footer class="footer container">
+<footer class="footer container-fluid">
     <div class="row align-items-center py-2">
         <div class="col">
             <div class="row align-items-center gy-2">
