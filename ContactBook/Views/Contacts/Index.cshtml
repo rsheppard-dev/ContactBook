@@ -1,114 +1,81 @@
 @model IEnumerable<ContactBook.Models.Contact>
+@using ContactBook.Services.Interfaces;
+
+@inject IImageService ImageService;
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="row">
+    <div class="col-12 text-end mb-2">
+        <a class="btn btn-primary rounded-pill" asp-action="Create">Create New</a>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BirthDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.County)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.County)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="row g-2">
+    <div class="col-12 col-md-4 sideNav">
+        <form asp-action="SearchContacts" asp-controller="Contacts">
+            <div class="input-group">
+                <input class="form-control" type="search" name="searchString"
+                       placeholder="Search Term" />
+                <input type="submit" class="btn btn-outline-primary" value="Search" />
+            </div>
+        </form>
+        <form asp-action="Index" asp-controller="Contacts">
+            <div class="mt-5">
+                <label class="form-label fw-bold">CATEGORY FILTER</label>
+
+                <select name="id" asp-items="@ViewBag.CategoryId" class="form-control"
+                        onchange="this.form.submit()" onfocus="this.selectedIndex=-1;this.blur();">
+                    <option>All Contacts</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    
+    <div class="col-12 col-md-8">
+        <div class="row row-cols-1 g-3">
+            @foreach (var contact in Model)
+            {
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4 square-img-container">
+                                <img src="@ImageService.ConvertByteArrayToFile(contact.ImageData, contact.ImageType)" class="square-img rounded-start" alt="@contact.FullName">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Html.DisplayFor(modelName => contact.FullName)</h5>
+                                    <address class="card-text">
+                                        @Html.DisplayFor(modelName => contact.Address1)<br>
+                                        @if (contact.Address2 != null)
+                                        {
+                                            @Html.DisplayFor(modelName => contact.Address2)<br>
+                                        }
+                                        @Html.DisplayFor(modelName => contact.City)<br>
+                                        @Html.DisplayFor(modelName => contact.County)<br>
+                                        @Html.DisplayFor(modelName => contact.PostCode)
+                                    </address>
+                                    <div class="card-text">
+                                        <span class="fw-bold me-2">Phone:</span>@Html.DisplayFor(modelName => contact.Phone)
+                                    </div>
+                                    <div class="card-text">
+                                        <span class="fw-bold me-2">Email:</span>@Html.DisplayFor(modelName => contact.Email)
+                                    </div>
+                                    <div class="fs-4">
+                                        <a class="me-3 editIcons" asp-action="Edit" asp-route-id="@contact.Id"><i class="bi bi-pencil-fill "></i></a>
+                                        <a class="me-3 editIcons" href="#"><i class="bi bi-envelope-fill "></i></a>
+                                        <a class="me-3 editIcons" asp-action="Delete" asp-route-id="@contact.Id"><i class="bi bi-trash-fill text-danger "></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+</div>
