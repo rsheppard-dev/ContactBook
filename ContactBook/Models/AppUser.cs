@@ -1,3 +1,4 @@
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
@@ -21,4 +22,8 @@ public class AppUser: IdentityUser
     {
         get { return $"{FirstName} {LastName}"; }
     }
+    
+    // virtuals
+    public virtual ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
+    public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
 }

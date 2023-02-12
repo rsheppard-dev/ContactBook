@@ -44,9 +44,10 @@ namespace ContactBook.Controllers
             var appUser = _context.Users
                 .Include(c => c.Contacts)
                 .ThenInclude(c => c.Categories)
-                .FirstOrDefault(u => u.id == appUserId);
+                .FirstOrDefault(u => u.Id == appUserId);
 
             var categories = appUser.Categories;
+            
             contacts = appUser.Contacts.OrderBy(cont => cont.LastName)
                 .ThenBy(cont => cont.FirstName)
                 .ToList();
