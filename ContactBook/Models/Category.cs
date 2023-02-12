@@ -6,10 +6,10 @@ public class Category
 {
     public int Id { get; set; }
     
-    [Microsoft.Build.Framework.Required]
+    [Required]
     public string? AppUserId { get; set; }
     
-    [Microsoft.Build.Framework.Required]
+    [Required]
     [Display(Name = "Category Name")]
     public string? Name { get; set; }
     
