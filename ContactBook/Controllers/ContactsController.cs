@@ -20,7 +20,12 @@ namespace ContactBook.Controllers
         private readonly IImageService _imageService;
         private readonly IAddressBookService _addressBookService;
 
-        public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService, IAddressBookService addressBookService)
+        public ContactsController(
+            ApplicationDbContext context,
+            UserManager<AppUser> userManager,
+            IImageService imageService,
+            IAddressBookService addressBookService
+            )
         {
             _context = context;
             _userManager = userManager;
@@ -32,8 +37,23 @@ namespace ContactBook.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Contacts.Include(c => c.AppUser);
-            return View(await applicationDbContext.ToListAsync());
+            List<Contact> contacts = new List<Contact>();
+            string appUserId = _userManager.GetUserId(User);
+            
+            // return user id and associated contacts and categories
+            var appUser = _context.Users
+                .Include(c => c.Contacts)
+                .ThenInclude(c => c.Categories)
+                .FirstOrDefault(u => u.id == appUserId);
+
+            var categories = appUser.Categories;
+            contacts = appUser.Contacts.OrderBy(cont => cont.LastName)
+                .ThenBy(cont => cont.FirstName)
+                .ToList();
+
+            ViewData["CategoryId"] = new SelectList(categories, "id", "Name");
+
+            return View(contacts);
         }
 
         // GET: Contacts/Details/5
