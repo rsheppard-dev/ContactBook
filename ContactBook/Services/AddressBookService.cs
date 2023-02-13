@@ -69,7 +69,19 @@ public class AddressBookService : IAddressBookService
 
     public async Task<ICollection<int>> GetContactCategoryIdsAsync(int contactId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var contact = await _context.Contacts.Include(c => c.Categories)
+                .FirstOrDefaultAsync(c => c.Id == contactId);
+
+            List<int> categoryIds = contact.Categories.Select(c => c.Id).ToList();
+
+            return categoryIds;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     public async Task<ICollection<Category>> GetContactCategoriesAsync(int contactId)
