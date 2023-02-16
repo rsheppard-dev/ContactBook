@@ -4,6 +4,7 @@ using ContactBook.Data;
 using ContactBook.Models;
 using ContactBook.Services;
 using ContactBook.Services.Interfaces;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -19,6 +20,9 @@ builder.Services.AddControllersWithViews();
 // Custom services
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAddressBookService, AddressBookService>();
+builder.Services.AddScoped<IEmailSender, EmailService>();
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("mailSettings"));
 
 var app = builder.Build();
 
