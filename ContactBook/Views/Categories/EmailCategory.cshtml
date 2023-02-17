@@ -1,0 +1,27 @@
+@model ContactBook.Models.ViewModels.EmailCategoryViewModel
+
+<h1 class="mt-5">Email Category: @Model.EmailData.GroupName</h1>
+<div class="p-2">
+    <form asp-action="EmailCategory" method="post">
+        <input type="hidden" asp-for="@Model.EmailData.GroupName" />
+        <div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
+            <div class="col col-md-12">
+                <label asp-for="@Model.EmailData.EmailAddress" class="form-label">To:</label>
+                <textarea type="email" readonly class="form-control" asp-for="@Model.EmailData.EmailAddress" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row row-cols-1 g-3">
+            <div class="col">
+                <label asp-for="@Model.EmailData.Subject" class="form-label">Subject:</label>
+                <input type="text" class="form-control" asp-for="@Model.EmailData.Subject" />
+            </div>
+            <div class="col">
+                <label asp-for="@Model.EmailData.Body" class="form-label">Message:</label>
+                <textarea class="form-control" rows=10 asp-for="@Model.EmailData.Body" required></textarea>
+            </div>
+            <div class="col text-end">
+                <button class="btn btn-primary rounded-pill btnlinks" type="submit">Send</button>
+            </div>
+        </div>
+    </form>
+</div>

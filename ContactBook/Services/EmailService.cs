@@ -23,7 +23,6 @@ public class EmailService: IEmailSender
         MimeMessage newEmail = new();
 
         newEmail.Sender = MailboxAddress.Parse(emailSender);
-        newEmail.From.Add(new MailboxAddress(_mailSettings.DisplayName, _mailSettings.From));
 
         foreach (var emailAddress in email.Split(";"))
         {
