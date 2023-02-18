@@ -5,8 +5,6 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>aspnet-ContactBook-B5644C44-92B3-4104-9F71-D452FF2549E4</UserSecretsId>
-        <BaseOutputPath>bin</BaseOutputPath>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
 
