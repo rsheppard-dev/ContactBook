@@ -1,18 +1,28 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<section class="row g-4">
-    <div class="col-12 col-md-6 align-self-end">
-        <img src="~/images/girl-managing-contacts.png" alt="Girl managing her contacts" class="img-fluid mx-auto">
+<section class="grid grid-cols-2 gap-5">
+    @if (SignInManager.IsSignedIn(User))
+    {
+    <div>
+        <h1 class="font-bold mb-3 text-4xl">Welcome!</h1>
     </div>
-
-    <div class="col-12 col-md-6 align-self-center order-md-first">
-        <h1 class="fw-bold mb-3 lh-base">Manage all your contacts in one place</h1>
-        <h2 class="h4 fw-semibold mb-4 text-secondary">Your digital address book</h2>
-        <div class="d-flex gap-2">
-            <a class="btn btn-dark btn-lg">Try It Out</a>
-            <a class="btn btn-primary btn-lg">Learn More</a>
+    } else {
+    <div class="flex flex-col justify-center col-span-2 md:col-span-1">
+        <h1 class="font-bold mb-3 text-4xl">Manage all your contacts in one place</h1>
+        <h2 class="font-semibold mb-4 text-xl">Your digital address book</h2>
+        <div class="flex gap-2">
+            <a href="#" class="btn-dark text-lg">Try Demo</a>
+            <a href="#" class="btn-primary text-lg">Learn More</a>
         </div>
     </div>
+
+    <div class="col-span-2 md:col-span-1 flex items-end justify-center">
+        <img src="~/images/girl-managing-contacts.png" alt="Girl managing her contacts">
+    </div>
+    }
 </section>

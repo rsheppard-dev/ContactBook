@@ -1,25 +1,20 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
 
-<ul class="navbar-nav d-flex align-items-center gap-3">
+<div class="flex w-full items-center justify-end gap-4 text-xs sm:text-sm">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><img src="~/images/settings-icon.png" alt="Settings" width="40"></a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button type="submit" class="btn btn-sm btn-dark">Sign Out</button>
-        </form>
-    </li>
+    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Settings" class="hidden md:block hover:animate-spin">
+        <img src="~/images/settings-icon.svg" alt="Settings" class="w-8 h-8">
+    </a>
+
+    <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button type="submit" class="sm:btn-dark text-light">Sign Out</button>
+    </form>
 }
 else
 {
-    <li class="nav-item">
-        <a class="btn btn-sm btn-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="btn btn-sm btn-primary" asp-area="Identity" asp-page="/Account/Login">Sign In</a>
-    </li>
+    <a asp-area="Identity" asp-page="/Account/Register" class="sm:btn-dark text-light">Register</a>
+    <a asp-area="Identity" asp-page="/Account/Login" class="sm:btn-primary text-light">Sign In</a>
 }
-</ul>
+</div>

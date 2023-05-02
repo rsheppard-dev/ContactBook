@@ -7,48 +7,57 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Contact Book</title>
-    <link rel="stylesheet" href="~/css/main.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
-<body class="container bg-light">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo.png" alt="Contact Book" height="45"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 gap-3">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                        <li class="nav-item">
-                            <a asp-area="" asp-controller="Categories" asp-action="Index"><img src="~/images/categories-icon.png" alt="Categories" width="40"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-area="" asp-controller="Contacts" asp-action="Index"><img src="~/images/contacts-icon.png" alt="Contacts" width="40"></a>
-                        </li>
-                        }
-                    </ul>
+<body class="bg-light font-montserrat text-dark flex flex-col h-screen justify-between">
+    <header class="mb-5">
+        <div class="sm:hidden bg-dark flex py-2">
+            <div class="container">
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+        <nav class="flex items-center py-4 justify-between container">
+            <div class="flex gap-4 items-center">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" alt="Contact Book" width="200">
+                </a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                <div class="hidden md:block">
+                    <a asp-controller="Categories" asp-action="Index" title="Categories">
+                        <img src="~/images/categories-icon.svg" alt="Categories" class="w-8 h-8 hover:scale-125 transition-transform">
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                        <a asp-controller="Contacts" asp-action="Index" title="Contacts">
+                            <img src="~/images/contacts-icon.svg" alt="Contacts" class="w-8 h-8 hover:scale-125 transition-transform">
+                    </a>
+                </div>
+                }
+                </div>
+
+                <div class="hidden sm:block">
                     <partial name="_LoginPartial" />
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            </nav>
+        </header>
 
-    <footer class="footer text-muted">
-        <div class="container">
-            &copy; 2023 - Contact Book - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="flex gap-4 grow container">
+        @if (SignInManager.IsSignedIn(User))
+        {
+           <partial name="_SidebarPartial" />
+        }
+            <main role="main">
+            @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+        <footer class="mb-24 md:mb-0 text-gray-500 container">
+            <div>
+                &copy; 2023 - Contact Book
+            </div>
+        </footer>
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+    </body>
+    </html>

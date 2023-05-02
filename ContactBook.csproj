@@ -22,4 +22,14 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.16" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateBuiltCheck Include="wwwroot/css/site.css" Set="Css" />
+    <UpToDateBuiltCheck Include="tailwind.config.js" Set="Css" />
+    <UpToDateBuiltCheck Include="postcss.config.js" Set="Css" />
+  </ItemGroup>
+
+  <Target Name="Tailwind" BeforeTargets="Build">
+    <Exec Command="npm run css:build" />
+  </Target>
+
 </Project>
