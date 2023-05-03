@@ -4,72 +4,85 @@
     ViewData["Title"] = "Create";
 }
 
-<h1 class="h3 fw-bold text-primary">Add New Contact</h1>
+<h1 class="font-bold text-primary text-2xl mb-10">Add New Contact</h1>
     <form asp-action="Create" asp-controller="Contacts" enctype="multipart/form-data">
-        <div class="row g-3 p-2">
-            <div class="col-12 col-lg-8"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+        <div class="grid grid-cols-12 gap-4 justify-between">
+
+            <div class="col-span-12 lg:col-span-4 lg:row-span-4 lg:col-start-8 flex flex-wrap items-center justify-center gap-2">
+                <img src="~/images/profile-pic-default.svg" alt="Profile Picture" class="w-56 h-56">
+                <div class="bg-lightest w-full rounded-md px-4 py-3 flex flex-col gap-2">
+                    <input type="file" accept="image/png, image/jpeg, image/webp" name="photo" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary file:btn-dark file:cursor-pointer">
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+                <label asp-for="FirstName" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="FirstName" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="FirstName" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Birthdate" class="control-label"></label>
-                <input asp-for="Birthdate" class="form-control" />
-                <span asp-validation-for="Birthdate" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+                <label asp-for="LastName" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="LastName" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="LastName" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Address1" class="control-label"></label>
-                <input asp-for="Address1" class="form-control" />
-                <span asp-validation-for="Address1" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+                <label asp-for="Email" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="Email" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="Email" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Address2" class="control-label"></label>
-                <input asp-for="Address2" class="form-control" />
-                <span asp-validation-for="Address2" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+                <label asp-for="PhoneNumber" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="PhoneNumber" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="PhoneNumber" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+                <label asp-for="Birthdate" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="Birthdate" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="Birthdate" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="County" class="control-label"></label>
-                <select asp-for="County" class="form-control"></select>
-                <span asp-validation-for="County" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+                <label asp-for="Address1" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="Address1" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="Address1" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PostCode" class="control-label"></label>
-                <input asp-for="PostCode" class="form-control" />
-                <span asp-validation-for="PostCode" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+                <label asp-for="Address2" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="Address2" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="Address2" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6 lg:col-span-4">
+                <label asp-for="City" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="City" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="City" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6 lg:col-span-5">
+                <label asp-for="County" class="uppercase text-dark font-bold text-sm"></label>
+                <select asp-for="County" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary"></select>
+                <span asp-validation-for="County" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group mb-3">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
+
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6 lg:col-span-3">
+                <label asp-for="PostCode" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="PostCode" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <span asp-validation-for="PostCode" class="text-red-600 text-xs italic"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Add Contact" class="btn btn-primary" />
+        
+            <div class="col-span-12">
+                <button type="submit" title="Add Contact" class="block btn-primary whitespace-nowrap">Add Contact</button>
             </div>
+
         </div>
     </form>
 
-<div>
+<div class="mt-20">
     <a asp-action="Index">Back to List</a>
 </div>
 

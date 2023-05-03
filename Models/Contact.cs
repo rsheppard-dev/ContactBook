@@ -29,10 +29,10 @@ namespace ContactBook.Models
         public DateTime? Birthdate { get; set; }
 
         [Required]
-        [Display(Name = "First Line of Address")]
+        [Display(Name = "1st Line of Address")]
         public string? Address1 { get; set; }
 
-        [Display(Name = "Second Line of Address")]
+        [Display(Name = "2nd Line of Address")]
         public string? Address2 { get; set; }
 
         [Required]

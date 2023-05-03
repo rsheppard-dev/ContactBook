@@ -42,12 +42,12 @@
             </nav>
         </header>
 
-        <div class="flex gap-4 grow container">
+        <div class="flex gap-10 grow container">
         @if (SignInManager.IsSignedIn(User))
         {
            <partial name="_SidebarPartial" />
         }
-            <main role="main">
+            <main class="w-full">
             @RenderBody()
             </main>
         </div>
