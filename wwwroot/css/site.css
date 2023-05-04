@@ -26,18 +26,36 @@
 		font-weight: 700;
 		font-style: normal;
 	}
+
+	[type='text'],
+    [type='email'],
+	[type='url'],
+    [type='password'],
+    [type='number'],
+    [type='date'],
+    [type='datetime-local'],
+    [type='month'],
+    [type='search'],
+    [type='tel'],
+    [type='time'],
+    [type='week'],
+    [multiple],
+    textarea,
+    select {
+		@apply rounded leading-tight focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary focus:border-primary;
+	}
 }
 
 @layer components {
 	.btn-primary {
-		@apply rounded bg-primary text-light px-4 py-2 hover:bg-opacity-80 transition-opacity;
+		@apply rounded bg-primary text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer;
 	}
 
 	.btn-dark {
-		@apply rounded bg-darkest text-light px-4 py-2 hover:bg-opacity-80 transition-opacity;
+		@apply rounded bg-darkest text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer;
 	}
 }
 
 input.input-validation-error {
-    @apply border-red-600
-}
+    @apply border-red-600 focus:ring-1 ring-red-600;
+} 

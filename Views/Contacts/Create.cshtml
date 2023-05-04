@@ -1,84 +1,92 @@
 @model ContactBook.Models.Contact
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add New Contact";
 }
 
-<h1 class="font-bold text-primary text-2xl mb-10">Add New Contact</h1>
     <form asp-action="Create" asp-controller="Contacts" enctype="multipart/form-data">
         <div class="grid grid-cols-12 gap-4 justify-between">
+            <div class="col-span-12 lg:col-span-6">
+                <h1 class="font-bold text-primary text-2xl mb-5">Add New Contact</h1>
+            </div>
 
-            <div class="col-span-12 lg:col-span-4 lg:row-span-4 lg:col-start-8 flex flex-wrap items-center justify-center gap-2">
-                <img src="~/images/profile-pic-default.svg" alt="Profile Picture" class="w-56 h-56">
-                <div class="bg-lightest w-full rounded-md px-4 py-3 flex flex-col gap-2">
-                    <input type="file" accept="image/png, image/jpeg, image/webp" name="photo" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary file:btn-dark file:cursor-pointer">
-                </div>
+            <div class="col-span-12 lg:col-span-6 lg:row-span-4 lg:col-start-7 flex flex-col gap-4 justify-end lg:pb-2">
+                <img id="contactImage" src="~/images/profile-pic-default.svg" alt="Profile Picture" class="w-56 h-56 rounded object-cover mx-auto">
+
+                <input id="imageInput" accept=".jpg,.jpeg,.png,.webp" asp-for="ImageFile" class="w-full text-sm bg-white border border-gray-500 rounded leading-tight focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary file:btn-dark" onchange="document.getElementById('contactImage').src= window.URL.createObjectURL(this.files[0])" />
+                @* <span asp-validation-for="ImageFile" class="text-red-600 italic text-xs"></span> *@
             </div>
 
             <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
                 <label asp-for="FirstName" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="FirstName" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <input asp-for="FirstName" />
                 <span asp-validation-for="FirstName" class="text-red-600 text-xs italic"></span>
             </div>
 
             <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
                 <label asp-for="LastName" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="LastName" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <input asp-for="LastName" />
                 <span asp-validation-for="LastName" class="text-red-600 text-xs italic"></span>
             </div>
 
             <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
-                <label asp-for="Email" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="Email" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
-                <span asp-validation-for="Email" class="text-red-600 text-xs italic"></span>
-            </div>
-
-            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
-                <label asp-for="PhoneNumber" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="PhoneNumber" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
-                <span asp-validation-for="PhoneNumber" class="text-red-600 text-xs italic"></span>
-            </div>
-
-            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
                 <label asp-for="Birthdate" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="Birthdate" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <input asp-for="Birthdate" />
                 <span asp-validation-for="Birthdate" class="text-red-600 text-xs italic"></span>
             </div>
 
             <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+                <label asp-for="PhoneNumber" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber" class="text-red-600 text-xs italic"></span>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-12 lg:col-span-6">
+                <label asp-for="Email" class="uppercase text-dark font-bold text-sm"></label>
+                <input asp-for="Email" />
+                <span asp-validation-for="Email" class="text-red-600 text-xs italic"></span>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-12">
                 <label asp-for="Address1" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="Address1" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <input asp-for="Address1" />
                 <span asp-validation-for="Address1" class="text-red-600 text-xs italic"></span>
             </div>
 
-            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+            <div class="flex flex-col gap-2 col-span-12">
                 <label asp-for="Address2" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="Address2" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <input asp-for="Address2" />
                 <span asp-validation-for="Address2" class="text-red-600 text-xs italic"></span>
             </div>
 
-            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6 lg:col-span-4">
+            <div class="flex flex-col gap-2 col-span-12 lg:col-span-5">
                 <label asp-for="City" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="City" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <input asp-for="City" />
                 <span asp-validation-for="City" class="text-red-600 text-xs italic"></span>
             </div>
 
-            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6 lg:col-span-5">
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-8 lg:col-span-5">
                 <label asp-for="County" class="uppercase text-dark font-bold text-sm"></label>
-                <select asp-for="County" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary"></select>
+                <select asp-for="County" asp-items="ViewBag.CountiesList">
+                    <option disabled selected hidden>-- Select County --</option>
+                </select>
                 <span asp-validation-for="County" class="text-red-600 text-xs italic"></span>
             </div>
 
-            <div class="flex flex-col gap-2 col-span-12 sm:col-span-6 lg:col-span-3">
+            <div class="flex flex-col gap-2 col-span-12 sm:col-span-4 lg:col-span-2">
                 <label asp-for="PostCode" class="uppercase text-dark font-bold text-sm"></label>
-                <input asp-for="PostCode" class="rounded leading-tight focus:outline-none focus:bg-white focus:ring-primary" />
+                <input asp-for="PostCode" />
                 <span asp-validation-for="PostCode" class="text-red-600 text-xs italic"></span>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-12">
+                <label asp-for="Categories" class="uppercase text-dark font-bold text-sm"></label>
+                <select name="CategoryList" asp-items="ViewBag.CategoryList" multiple></select>
             </div>
         
             <div class="col-span-12">
                 <button type="submit" title="Add Contact" class="block btn-primary whitespace-nowrap">Add Contact</button>
             </div>
-
         </div>
     </form>
 
