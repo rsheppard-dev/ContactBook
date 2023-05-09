@@ -19,7 +19,7 @@ module.exports = {
 				secondary: '#6633CC',
 				darkest: '#0c121c',
 				dark: '#1E293B',
-				mid: '#b8bfc6',
+				mid: '#e0e0e0',
 				light: '#fffdf8',
 				lightest: '#d6dee7',
 			},
