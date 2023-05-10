@@ -32,7 +32,7 @@
     </form>
 
     <form asp-action="Index" asp-controller="Contacts" class="flex items-center gap-1">
-        <select class="w-full lg:w-auto" name="id" asp-items="@ViewBag.CategoryId" onchange="this.form.submit()" onfocus="this.selectedIndex=-1;this.blur();">
+        <select name="categoryId" asp-items="@ViewBag.CategoryId" onchange="this.form.submit()" onfocus="this.selectedIndex=-1;this.blur();" class="w-full lg:w-auto">
             <option>All Contacts</option>
         </select>
     </form>

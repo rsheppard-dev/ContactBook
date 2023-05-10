@@ -27,15 +27,16 @@ namespace ContactBook.Contacts
 
         // GET: Contacts
         [Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var contacts = new List<Contact>();
             string appUserId = _userManager.GetUserId(User);
 
-            // return the user id and its associated contacts and categories
+            // return the user id and their associated contacts and categories
             AppUser appUser = _context.Users
-                .Include(c => c.Contacts)
-                .ThenInclude(c => c.Categories)
+                .Include(u => u.Contacts)
+                .ThenInclude(u => u.Categories)
+                .Include(u => u.Categories)
                 .FirstOrDefault(u => u.Id == appUserId)!;
 
             var categories = appUser.Categories;
