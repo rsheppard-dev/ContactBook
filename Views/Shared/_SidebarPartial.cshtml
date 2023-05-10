@@ -1,6 +1,6 @@
-<aside class="bg-light shadow-inner md:bg-darkest rounded-lg p-6 h-fit fixed md:static bottom-0 inset-x-0 md:inset-0 min-w-full md:min-w-fit"> 
+<aside class="z-50 bg-light shadow-inner md:bg-darkest rounded-lg p-6 h-20 md:h-fit fixed md:static bottom-0 inset-x-0 md:inset-0 min-w-full md:min-w-fit"> 
     <nav class="flex justify-evenly md:justify-normal md:grid md:grid-cols-[30px_auto] text-light items-center gap-4">
-        <a href="/Categories" title="Categories" class="hover:scale-125 md:hover:scale-100 transition-transform">
+        <a asp-action="Index" asp-controller="Categories" title="Categories" class="hover:scale-125 md:hover:scale-100 transition-transform">
             <img src="~/images/categories-icon.svg" alt="Categories" class="w-8 h-8 mx-auto">
         </a>
         <span class="font-bold text-light hidden md:block">Categories</span>
@@ -10,11 +10,11 @@
         </div>
 
         <div class="hidden md:flex flex-col gap-2 whitespace-nowrap">
-            <a href="/Categories/Create">Add Category</a>
-            <a href="/Categories">View Categories</a>
+            <a asp-action="Create" asp-controller="Categories">Add Category</a>
+            <a asp-action="Index" asp-controller="Categories">View Categories</a>
         </div>
 
-        <a href="/Contacts" title="Contacts" class="hover:scale-125 md:hover:scale-100 transition-transform">
+        <a asp-action="Index" asp-controller="Contacts" title="Contacts" class="hover:scale-125 md:hover:scale-100 transition-transform">
             <img src="~/images/contacts-icon.svg" alt="Contacts" class="w-8 h-8 mx-auto">
         </a>
         <span class="hidden md:block font-bold text-light">Contacts</span>
@@ -24,11 +24,11 @@
         </div>
 
         <div class="hidden md:flex flex-col gap-2 whitespace-nowrap">
-            <a href="/Contacts/Create">Add Contact</a>
-            <a href="/Contacts">View Contacts</a>
+            <a asp-action="Create" asp-controller="Contacts">Add Contact</a>
+            <a asp-action="Index" asp-controller="Contacts">View Contacts</a>
         </div>
 
-        <a href="/Identity/Account/Manage" title="Settings" class="hover:animate-spin md:hover:animate-none">
+        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Settings" class="hover:animate-spin md:hover:animate-none">
             <img src="~/images/settings-icon.svg" alt="Settings" class="w-8 h-8 mx-auto">
         </a>
         <span class="hidden md:block font-bold text-light">Settings</span>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="hidden md:flex flex-col gap-2 whitespace-nowrap">
-            <a href="/Identity/Account/Manage">User Settings</a>
+            <a asp-area="Identity" asp-page="/Account/Manage/Index">User Settings</a>
             <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit">Sign Out</button>
             </form>
