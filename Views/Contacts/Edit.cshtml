@@ -1,98 +1,111 @@
 @model ContactBook.Models.Contact
+@using ContactBook.Services.Interfaces
+
+@inject IImageService imageService
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Contact";
 }
 
-<h1>Edit</h1>
+<form asp-action="Edit" asp-controller="Contacts" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id">
+    <input type="hidden" asp-for="AppUserId">
+    <input type="hidden" asp-for="Created">
+    <input type="hidden" asp-for="ImageData">
+    <input type="hidden" asp-for="ImageType">
+    <input type="hidden" asp-for="Created">
+    <div class="grid grid-cols-12 gap-4 justify-between">
+        <div class="col-span-12 lg:col-span-6">
+            <h1 class="uppercase font-bold text-primary text-2xl mb-5">Edit Contact</h1>
+        </div>
 
-<h4>Contact</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="AppUserId" class="control-label"></label>
-                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId"></select>
-                <span asp-validation-for="AppUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Birthdate" class="control-label"></label>
-                <input asp-for="Birthdate" class="form-control" />
-                <span asp-validation-for="Birthdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address1" class="control-label"></label>
-                <input asp-for="Address1" class="form-control" />
-                <span asp-validation-for="Address1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address2" class="control-label"></label>
-                <input asp-for="Address2" class="form-control" />
-                <span asp-validation-for="Address2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="County" class="control-label"></label>
-                <select asp-for="County" class="form-control"></select>
-                <span asp-validation-for="County" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostCode" class="control-label"></label>
-                <input asp-for="PostCode" class="form-control" />
-                <span asp-validation-for="PostCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageData" class="control-label"></label>
-                <input asp-for="ImageData" class="form-control" />
-                <span asp-validation-for="ImageData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageType" class="control-label"></label>
-                <input asp-for="ImageType" class="form-control" />
-                <span asp-validation-for="ImageType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        <div class="col-span-12 lg:col-span-6 lg:row-span-4 lg:col-start-7 flex flex-col gap-4 justify-end lg:pb-2">
+            @if (Model.ImageData != null)
+            {
+            <img id="contactImage" src="@imageService.ConvertByteArrayToFile(Model.ImageData, Model.ImageType!)" alt="Profile Picture" class="w-56 h-56 rounded object-cover mx-auto">
+            }
+            else
+            {
+            <img id="contactImage" src="~/images/profile-pic-default.svg" alt="Profile Picture" class="w-56 h-56 rounded object-cover mx-auto">  
+            }
+            <input id="imageInput" accept="image/jpg, image/jpg, image/png, image/webp" asp-for="ImageFile" class="w-full text-sm bg-white border border-gray-500 rounded leading-tight focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary file:bg-darkest file:text-light file:px-3 file:py-2 file:appearance-none file:font-bold file:uppercase file:text-sm file:cursor-pointer file:hover:bg-opacity-80 file:transition-opacity" />
+            @* <span asp-validation-for="ImageFile" class="text-red-600 italic text-xs"></span> *@
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+            <label asp-for="FirstName" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="FirstName" />
+            <span asp-validation-for="FirstName" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+            <label asp-for="LastName" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="LastName" />
+            <span asp-validation-for="LastName" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+            <label asp-for="BirthDate" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="BirthDate" />
+            <span asp-validation-for="BirthDate" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+            <label asp-for="PhoneNumber" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="PhoneNumber" />
+            <span asp-validation-for="PhoneNumber" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12 lg:col-span-6">
+            <label asp-for="Email" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="Email" />
+            <span asp-validation-for="Email" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12">
+            <label asp-for="Address1" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="Address1" />
+            <span asp-validation-for="Address1" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12">
+            <label asp-for="Address2" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="Address2" />
+            <span asp-validation-for="Address2" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12 lg:col-span-5">
+            <label asp-for="City" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="City" />
+            <span asp-validation-for="City" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12 sm:col-span-8 lg:col-span-5">
+            <label asp-for="County" class="uppercase text-dark font-bold text-sm"></label>
+            <select asp-for="County" asp-items="ViewBag.CountiesList">
+                <option disabled selected hidden></option>
+            </select>
+            <span asp-validation-for="County" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12 sm:col-span-4 lg:col-span-2">
+            <label asp-for="PostCode" class="uppercase text-dark font-bold text-sm"></label>
+            <input asp-for="PostCode" />
+            <span asp-validation-for="PostCode" class="text-red-600 text-xs italic"></span>
+        </div>
+
+        <div class="flex flex-col gap-2 col-span-12">
+            <label asp-for="Categories" class="uppercase text-dark font-bold text-sm"></label>
+            <select name="CategoryList" asp-items="ViewBag.CategoryList" multiple></select>
+        </div>
+    
+        <div class="col-span-12">
+            <button type="submit" title="Update Contact" class="btn-primary whitespace-nowrap">Update Contact</button>
+        </div>
     </div>
-</div>
+</form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<script src="~/js/updateImage.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

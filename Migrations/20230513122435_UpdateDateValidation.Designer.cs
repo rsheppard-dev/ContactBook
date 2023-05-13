@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ContactBook.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230511201550_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230513122435_UpdateDateValidation")]
+    partial class UpdateDateValidation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

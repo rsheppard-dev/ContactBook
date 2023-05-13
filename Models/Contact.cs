@@ -26,8 +26,8 @@ namespace ContactBook.Models
 
         [Display(Name = "Birthday")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? Birthdate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? BirthDate { get; set; }
 
         [Required]
         [Display(Name = "1st Line of Address")]
@@ -52,6 +52,7 @@ namespace ContactBook.Models
         public string? Email { get; set; }
 
         [Required]
+        [Phone]
         [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
 

@@ -186,7 +186,7 @@ namespace ContactBook.Migrations
                     AppUserId = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    Birthdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Address1 = table.Column<string>(type: "text", nullable: false),
                     Address2 = table.Column<string>(type: "text", nullable: true),
                     City = table.Column<string>(type: "text", nullable: false),
