@@ -52,9 +52,7 @@ namespace ContactBook.Models
         public string? Email { get; set; }
 
         [Required]
-        [Phone]
         [Display(Name = "Phone Number")]
-        [DataType(DataType.PhoneNumber)]
         public string? PhoneNumber { get; set; }
 
         [Required]

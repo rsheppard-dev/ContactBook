@@ -5,7 +5,7 @@ namespace ContactBook.Services
     public class ImageService : IImageService
     {
         private readonly string[] suffixes = {"Bytes", "KB", "MB", "GB", "TB", "PB"};
-        private readonly string defaultImage = "images/profile-pic-default.svg";
+        private readonly string defaultImage = "/images/profile-pic-default.svg";
         public string ConvertByteArrayToFile(byte[] fileData, string extension)
         {
             if (fileData is null) return defaultImage;

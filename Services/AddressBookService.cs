@@ -14,9 +14,27 @@ namespace ContactBook.Services
         {
             _context = context;
         }
-        public Task AddContactToCategoryAsync(int categoryId, int contactId)
+        public async Task AddContactToCategoryAsync(int categoryId, int contactId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // check if category is in the contact already
+                if (!await IsContactInCategory(categoryId, contactId))
+                {
+                    Contact? contact = await _context.Contacts.FindAsync(contactId);
+                    Category? category = await _context.Categories.FindAsync(categoryId);
+
+                    if (category != null && contact != null)
+                    {
+                        category.Contacts.Add(contact);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public Task<ICollection<Category>> GetContactCategoriesAsync(int contactId)
@@ -48,9 +66,14 @@ namespace ContactBook.Services
             return categories;
         }
 
-        public Task<bool> IsContactInCategory(int categoryId, int contactId)
+        public async Task<bool> IsContactInCategory(int categoryId, int contactId)
         {
-            throw new NotImplementedException();
+            Contact? contact = await _context.Contacts.FindAsync(contactId);
+
+            return await _context.Categories
+                .Include(c => c.Contacts)
+                .Where(c => c.Id == categoryId && c.Contacts.Contains(contact!))
+                .AnyAsync();
         }
 
         public Task RemoveContactFromCategoryAsync(int categoryId, int contactId)
