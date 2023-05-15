@@ -19,8 +19,24 @@
 
 <div class="flex flex-wrap gap-5">
     @foreach (var category in Model) {
-        <div class="md:hover:scale-110 md:hover:shadow-md md:hover:z-10 transition-all relative group overflow-hidden rounded-lg w-full lg:w-56 h-56 flex items-center justify-center flex-col p-3 antialiased bg-center bg-no-repeat bg-cover bg-dark bg-blend-overlay bg-opacity-40" style="background-image: url('@imageService.ConvertByteArrayToFile(category.ImageData!, category.ImageType!)');">
-            <span class="font-bold text-2xl text-light shadow-lg mb-10">@Html.DisplayFor(modelItem => category.Name)</span>
+        if (category.ImageData == null)
+        {
+            <div class="md:hover:scale-110 md:hover:shadow-md md:hover:z-10 transition-all relative group overflow-hidden rounded-lg w-full lg:w-56 h-56 flex items-center justify-center flex-col p-3 bg-primary">
+                <span class="font-bold text-2xl text-light drop-shadow-md mb-10">@Html.DisplayFor(modelItem => category.Name)</span>
+                <div class="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2 p-3">
+                    <a asp-action="Edit" asp-route-id="@category.Id" class="bg-darkest p-3 rounded-full">
+                        <img src="~/images/edit.svg" alt="Edit" class="w-8 h-8 hover:scale-125 transition-transform">
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@category.Id" class="bg-darkest p-3 rounded-full">
+                        <img src="~/images/delete.svg" alt="Delete" class="w-8 h-8 hover:scale-125 transition-transform">
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="md:hover:scale-110 md:hover:shadow-md md:hover:z-10 transition-all relative group overflow-hidden rounded-lg w-full lg:w-56 h-56 flex items-center justify-center flex-col p-3 antialiased bg-center bg-no-repeat bg-cover bg-dark bg-blend-overlay bg-opacity-40" style="background-image: url('@imageService.ConvertByteArrayToFile(category.ImageData!, category.ImageType!)');">
+            <span class="font-bold text-2xl text-light drop-shadow-md mb-10">@Html.DisplayFor(modelItem => category.Name)</span>
             <div class="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2 p-3">
                 <a asp-action="Edit" asp-route-id="@category.Id" class="bg-darkest p-3 rounded-full">
                     <img src="~/images/edit.svg" alt="Edit" class="w-8 h-8 hover:scale-125 transition-transform">
@@ -29,7 +45,8 @@
                     <img src="~/images/delete.svg" alt="Delete" class="w-8 h-8 hover:scale-125 transition-transform">
                 </a>
             </div>
-        </div>
+            </div>
+        }
     }
 </div>
 
