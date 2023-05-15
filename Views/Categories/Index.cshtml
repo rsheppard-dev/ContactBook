@@ -1,41 +1,35 @@
 @model IEnumerable<ContactBook.Models.Category>
+@using ContactBook.Services.Interfaces;
+@inject IImageService imageService;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Categories";
 }
 
-<h1>Index</h1>
+<div class="flex flex-wrap gap-5 items-center justify-between mb-5">
+    <h1 class="uppercase font-bold text-primary text-2xl">Categories</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <a asp-action="Create" class="btn-primary text-light flex items-center w-fit gap-2 text-sm">
+        <span>Add Category</span>        
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+        </svg>
+    </a>
+</div>
+
+<div class="flex flex-wrap gap-5">
+    @foreach (var category in Model) {
+        <div class="md:hover:scale-110 md:hover:shadow-md md:hover:z-10 transition-all relative group overflow-hidden rounded-lg w-full lg:w-56 h-56 flex items-center justify-center flex-col p-3 antialiased bg-center bg-no-repeat bg-cover bg-dark bg-blend-overlay bg-opacity-40" style="background-image: url('@imageService.ConvertByteArrayToFile(category.ImageData!, category.ImageType!)');">
+            <span class="font-bold text-2xl text-light shadow-lg mb-10">@Html.DisplayFor(modelItem => category.Name)</span>
+            <div class="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2 p-3">
+                <a asp-action="Edit" asp-route-id="@category.Id" class="bg-darkest p-3 rounded-full">
+                    <img src="~/images/edit.svg" alt="Edit" class="w-8 h-8 hover:scale-125 transition-transform">
+                </a>
+                <a asp-action="Delete" asp-route-id="@category.Id" class="bg-darkest p-3 rounded-full">
+                    <img src="~/images/delete.svg" alt="Delete" class="w-8 h-8 hover:scale-125 transition-transform">
+                </a>
+            </div>
+        </div>
+    }
+</div>
+

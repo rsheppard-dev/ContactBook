@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using ContactBook.Enums;
 using Microsoft.AspNetCore.Identity;
 using ContactBook.Services.Interfaces;
+using ContactBook.Models.ViewModels;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ContactBook.Contacts
 {
@@ -16,19 +18,23 @@ namespace ContactBook.Contacts
         private readonly UserManager<AppUser> _userManager;
         private readonly IImageService _imageService;
         private readonly IAddressBookService _addressBookService;
+        private readonly IEmailSender _emailService;
 
-        public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService, IAddressBookService addressBookService)
+        public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService, IAddressBookService addressBookService, IEmailSender emailService)
         {
             _context = context;
             _userManager = userManager;
             _imageService = imageService;
             _addressBookService = addressBookService;
+            _emailService = emailService;
         }
 
         // GET: Contacts
         [Authorize]
-        public IActionResult Index(int categoryId)
+        public IActionResult Index(int categoryId, string swalMessage = null)
         {
+            ViewData["SwalMessage"] = swalMessage;
+            
             var contacts = new List<Contact>();
             string appUserId = _userManager.GetUserId(User);
 
@@ -93,6 +99,60 @@ namespace ContactBook.Contacts
             return View(nameof(Index), contacts);
         }
 
+        // GET: Contacts/EmailContact/5
+        [Authorize]
+        public async Task<IActionResult> EmailContact(int? id)
+        {
+            string appUserId = _userManager.GetUserId(User);
+            Contact? contact = await _context.Contacts
+                .Where(c => c.Id == id && c.AppUserId == appUserId)
+                .FirstOrDefaultAsync();
+            
+            if (contact == null)
+            {
+                return NotFound(contact);
+            }
+
+            EmailData emailData = new EmailData()
+            {
+                EmailAddress = contact.Email!,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName
+            };
+
+            EmailContactViewModel model = new EmailContactViewModel()
+            {
+                Contact = contact,
+                EmailData = emailData
+            };
+
+            return View(model);
+        }
+
+        //POST: Contacts/EmailContact/5
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EmailContact(EmailContactViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _emailService.SendEmailAsync(model.EmailData!.EmailAddress, model.EmailData.Subject, model.EmailData.Body);
+
+                    return RedirectToAction("Index", "Contacts", new { swalMessage = "Success: Email sent!"});
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index", "Contacts", new { swalMessage = "Error: Email failed to send!"});
+                    throw;
+                }
+            }
+
+
+            return View(model);
+        }
+
         // GET: Contacts/Details/5
         [Authorize]
         public async Task<IActionResult> Details(int? id)
@@ -133,6 +193,7 @@ namespace ContactBook.Contacts
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate,Address1,Address2,City,County,PostCode,Email,PhoneNumber,ImageFile")] Contact contact, List<int> CategoryList)
         {
             ModelState.Remove("AppUserId");
+            
             if (ModelState.IsValid)
             {
                 contact.AppUserId = _userManager.GetUserId(User);
@@ -263,9 +324,11 @@ namespace ContactBook.Contacts
                 return NotFound();
             }
 
+            string appUserId = _userManager.GetUserId(User);
+
             var contact = await _context.Contacts
                 .Include(c => c.AppUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == appUserId);
             if (contact == null)
             {
                 return NotFound();
@@ -279,17 +342,16 @@ namespace ContactBook.Contacts
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Contacts == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Contacts'  is null.");
-            }
-            var contact = await _context.Contacts.FindAsync(id);
+            string appUserId = _userManager.GetUserId(User);
+
+            var contact = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == appUserId);
+            
             if (contact != null)
             {
                 _context.Contacts.Remove(contact);
+                await _context.SaveChangesAsync();
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

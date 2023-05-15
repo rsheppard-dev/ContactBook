@@ -39,7 +39,6 @@ namespace ContactBook.Models
         [Required]
         public string? City { get; set; }
 
-        [Required]
         public Counties County { get; set; }
 
         [Required]

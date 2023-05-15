@@ -1,37 +1,35 @@
 @model ContactBook.Models.Category
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add Category";
 }
 
-<h1>Create</h1>
+<h1 class="uppercase font-bold text-primary text-2xl mb-5">@ViewData["Title"]</h1>
 
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="AppUserId" class="control-label"></label>
-                <select asp-for="AppUserId" class ="form-control" asp-items="ViewBag.AppUserId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="grid grid-cols-12 gap-4">
+    <div class="col-span-12 lg:col-span-6 lg:col-start-7 lg:row-span-6">
+        <img id="contactImage" src="~/images/default-category-image.svg" alt="Profile Picture" class="w-56 h-56 rounded-lg object-cover mx-auto">
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="col-span-12 lg:col-span-6 flex flex-col gap-2 justify-end">
+        <label asp-for="ImageFile" class="uppercase text-dark font-bold text-sm"></label>
+        <input id="imageInput" accept="image/jpg, image/jpg, image/png, image/webp" asp-for="ImageFile" class="w-full text-sm bg-white border border-gray-500 rounded leading-tight focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary file:bg-darkest file:text-light file:px-3 file:py-2 file:appearance-none file:font-bold file:uppercase file:text-sm file:cursor-pointer file:hover:bg-opacity-80 file:transition-opacity" />
+        <span asp-validation-for="ImageFile" class="text-red-600 italic text-xs"></span>
+    </div>
+
+    <div class="flex flex-col gap-2 col-span-12 lg:col-span-6 lg:order-first">
+        <label asp-for="Name" class="uppercase text-dark font-bold text-sm"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name" class="text-red-600 text-xs italic"></span>
+    </div>
+
+    <div class="col-span-12">
+        <button type="submit" title="Add Category" class="btn-primary whitespace-nowrap">Add Category</button>
+    </div>
+
+</form>
 
 @section Scripts {
+    <script src="~/js/updateImage.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

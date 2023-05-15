@@ -4,23 +4,32 @@ using Microsoft.EntityFrameworkCore;
 using ContactBook.Data;
 using ContactBook.Models;
 using Microsoft.AspNetCore.Authorization;
+using ContactBook.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace ContactBook.Categories
 {
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IImageService _imageService;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService)
         {
             _context = context;
+            _userManager = userManager;
+            _imageService = imageService;
         }
 
         // GET: Categories
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Categories.Include(c => c.AppUser);
+            var applicationDbContext = _context.Categories
+                .Include(c => c.AppUser)
+                .OrderBy(c => c.Name);
+                
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -57,15 +66,25 @@ namespace ContactBook.Categories
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AppUserId,Name")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name,ImageFile")] Category category)
         {
+            ModelState.Remove("AppUserId");
+
             if (ModelState.IsValid)
             {
+                category.AppUserId = _userManager.GetUserId(User);
+
+                if (category.ImageFile != null)
+                {
+                    category.ImageData = await _imageService.ConvertFileToByteArrayAsync(category.ImageFile);
+                    category.ImageType = category.ImageFile.ContentType;
+                }
+
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", category.AppUserId);
+
             return View(category);
         }
 

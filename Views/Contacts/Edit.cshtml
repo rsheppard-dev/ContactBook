@@ -26,7 +26,7 @@
             }
             else
             {
-            <img id="contactImage" src="~/images/profile-pic-default.svg" alt="Profile Picture" class="w-56 h-56 rounded object-cover mx-auto">  
+            <img id="contactImage" src="~/images/profile-pic-default.svg" alt="Profile Picture" class="w-56 h-56 rounded-lg object-cover mx-auto">  
             }
             <input id="imageInput" accept="image/jpg, image/jpg, image/png, image/webp" asp-for="ImageFile" class="w-full text-sm bg-white border border-gray-500 rounded leading-tight focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary file:bg-darkest file:text-light file:px-3 file:py-2 file:appearance-none file:font-bold file:uppercase file:text-sm file:cursor-pointer file:hover:bg-opacity-80 file:transition-opacity" />
             @* <span asp-validation-for="ImageFile" class="text-red-600 italic text-xs"></span> *@
@@ -105,8 +105,7 @@
     </div>
 </form>
 
-<script src="~/js/updateImage.js"></script>
-
 @section Scripts {
+    <script src="~/js/updateImage.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

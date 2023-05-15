@@ -42,7 +42,7 @@
     [multiple],
     textarea,
     select {
-		@apply rounded leading-tight focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary focus:border-primary;
+		@apply rounded leading-tight enabled:focus:outline-none enabled:focus:ring-1 enabled:focus:ring-primary enabled:focus:border-primary;
 	}
 }
 
@@ -53,6 +53,10 @@
 
 	.btn-dark {
 		@apply rounded bg-darkest text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer;
+	}
+
+	.btn-danger {
+		@apply rounded bg-red-600 text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer;
 	}
 }
 
