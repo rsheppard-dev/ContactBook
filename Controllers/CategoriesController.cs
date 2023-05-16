@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ContactBook.Data;
 using ContactBook.Models;
+using ContactBook.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using ContactBook.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -26,11 +27,73 @@ namespace ContactBook.Categories
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Categories
+            string appUserId = _userManager.GetUserId(User);
+
+            var categories = await _context.Categories
+                .Where(c => c.AppUserId == appUserId)
                 .Include(c => c.AppUser)
-                .OrderBy(c => c.Name);
+                .OrderBy(c => c.Name)
+                .ToListAsync();
                 
-            return View(await applicationDbContext.ToListAsync());
+            return View(categories);
+        }
+
+        // GET: SearchContacts
+        public IActionResult SearchContacts(string searchString)
+        {
+            string appUserId = _userManager.GetUserId(User);
+            var categories = new List<Category>();
+
+            AppUser appUser = _context.Users
+                .Include(c => c.Categories)
+                .ThenInclude(c => c.Contacts)
+                .FirstOrDefault(u => u.Id == appUserId)!;
+
+            if (String.IsNullOrEmpty(searchString))
+            {
+                categories = appUser.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList();
+            }
+            else
+            {
+                categories = appUser.Categories
+                    .Where(c => c.Name!.ToLower().Contains(searchString.ToLower()))
+                    .OrderBy(c => c.Name)
+                    .ToList();
+            }
+
+            return View(nameof(Index), categories);
+        }
+
+        // GET: EmailCategory
+        [Authorize]
+        public async Task<IActionResult> EmailCategory(int id)
+        {
+            string appUserId = _userManager.GetUserId(User);
+
+            Category? category = await _context.Categories
+                .Include(c => c.Contacts)
+                .FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == appUserId);
+
+            List<string> emails = category!.Contacts
+                .Select(c => c.Email)
+                .ToList()!;
+
+            EmailData emailData = new EmailData()
+            {
+                GroupName = category.Name,
+                EmailAddress = String.Join(";", emails),
+                Subject = $"Group Message: {category.Name}"
+            };
+
+            EmailCategoryViewModel model = new EmailCategoryViewModel()
+            {
+                Contacts = category.Contacts.ToList(),
+                EmailData = emailData
+            };
+
+            return View(model);
         }
 
         // GET: Categories/Details/5
@@ -57,7 +120,6 @@ namespace ContactBook.Categories
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -72,7 +134,8 @@ namespace ContactBook.Categories
 
             if (ModelState.IsValid)
             {
-                category.AppUserId = _userManager.GetUserId(User);
+                string appUserId = _userManager.GetUserId(User);
+                category.AppUserId = appUserId;
 
                 if (category.ImageFile != null)
                 {
@@ -92,17 +155,22 @@ namespace ContactBook.Categories
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            string appUserId = _userManager.GetUserId(User);
+
+            var category = await _context.Categories
+                .Where(c => c.Id == id && c.AppUserId == appUserId)
+                .FirstOrDefaultAsync();
+
             if (category == null)
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", category.AppUserId);
+
             return View(category);
         }
 
@@ -111,7 +179,7 @@ namespace ContactBook.Categories
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AppUserId,Name")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AppUserId,Name,ImageData,ImageType,ImageFile")] Category category)
         {
             if (id != category.Id)
             {
@@ -122,6 +190,15 @@ namespace ContactBook.Categories
             {
                 try
                 {
+                    string appUserId = _userManager.GetUserId(User);
+                    category.AppUserId = appUserId;
+
+                    if (category.ImageFile != null)
+                    {
+                        category.ImageData = await _imageService.ConvertFileToByteArrayAsync(category.ImageFile);
+                        category.ImageType = category.ImageFile.ContentType;
+                    }
+
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
@@ -138,7 +215,7 @@ namespace ContactBook.Categories
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", category.AppUserId);
+
             return View(category);
         }
 

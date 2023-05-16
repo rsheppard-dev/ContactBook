@@ -149,7 +149,6 @@ namespace ContactBook.Contacts
                 }
             }
 
-
             return View(model);
         }
 

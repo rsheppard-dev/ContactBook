@@ -45,7 +45,7 @@
             <img src="@imageService.ConvertByteArrayToFile(contact.ImageData!, contact.ImageType!)" alt="@Html.DisplayFor(modelContact => contact.FullName)" class="object-cover object-center h-40 w-full">
         </div>
         <div class="bg-mid text-dark px-3 py-3 rounded-b-lg sm:rounded-t-lg relative">
-            <div class="hidden sm:block rounded-full border-b-4  border-white absolute right-0 -top-12 overflow-hidden">
+            <div class="hidden sm:block rounded-full absolute right-2 -top-12 overflow-hidden">
                 <img src="@imageService.ConvertByteArrayToFile(contact.ImageData!, contact.ImageType!)" alt="@Html.DisplayFor(modelContact => contact.FullName)" class="object-cover w-40 h-40 object-center">
             </div>
             <h2 class="text-xl font-bold mb-3">@Html.DisplayFor(modelContact => contact.FullName)</h2>

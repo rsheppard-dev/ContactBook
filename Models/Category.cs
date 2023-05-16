@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,6 +14,12 @@ namespace ContactBook.Models
         [Required]
         [Display(Name = "Category Name")]
         public string? Name { get; set; }
+
+        [DefaultValue(false)]
+        public bool Favourite { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime LastContact { get; set; }
 
         // image properties
         public byte[]? ImageData { get; set; }

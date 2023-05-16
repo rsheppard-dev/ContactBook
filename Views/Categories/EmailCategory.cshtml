@@ -1,0 +1,39 @@
+@model ContactBook.Models.ViewModels.EmailCategoryViewModel
+
+@{
+    ViewData["Title"] = $"Email Category - {Model.EmailData!.GroupName}";
+}
+
+<h1 class="uppercase font-bold text-primary text-2xl mb-5">@ViewData["Title"]</h1>
+
+<form asp-action="EmailCategory" asp-controller="Categories" method="post" class="bg-mid text-dark px-3 py-3 rounded-lg flex flex-col gap-2">
+    <input type="hidden" asp-for="@Model.EmailData!.GroupName">
+    <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+        <label asp-for="@Model.EmailData!.EmailAddress" class="uppercase text-dark font-bold text-sm"></label>
+        <textarea readonly asp-for="@Model.EmailData!.EmailAddress" class="bg-lightest"></textarea>
+        <span asp-validation-for="@Model.EmailData!.EmailAddress" class="text-red-600 text-xs italic"></span>
+    </div>
+
+    <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+        <label asp-for="@Model.EmailData!.Subject" class="uppercase text-dark font-bold text-sm"></label>
+        <input asp-for="@Model.EmailData!.Subject">
+        <span asp-validation-for="@Model.EmailData!.Subject" class="text-red-600 text-xs italic"></span>
+    </div>
+
+    <div class="flex flex-col gap-2 col-span-12 sm:col-span-6">
+        <label asp-for="@Model.EmailData!.Body" class="uppercase text-dark font-bold text-sm"></label>
+        <textarea asp-for="@Model.EmailData!.Body" rows="10"></textarea>
+        <span asp-validation-for="@Model.EmailData!.Body" class="text-red-600 text-xs italic"></span>
+    </div>
+
+    <div class="flex justify-end">
+        <button type="submit" title="Send Email" class="btn-primary whitespace-nowrap flex items-center gap-2">
+            <span>Send</span>
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+            </span>
+        </button>
+    </div>
+</form>
