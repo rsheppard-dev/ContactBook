@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ContactBook.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230515130259_AddImagesToCategory")]
-    partial class AddImagesToCategory
+    [Migration("20230518201849_UpdatedModels")]
+    partial class UpdatedModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,11 +125,17 @@ namespace ContactBook.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("Favourite")
+                        .HasColumnType("boolean");
+
                     b.Property<byte[]>("ImageData")
                         .HasColumnType("bytea");
 
                     b.Property<string>("ImageType")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastContact")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -168,7 +174,7 @@ namespace ContactBook.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("County")
+                    b.Property<int?>("County")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Created")
@@ -177,6 +183,9 @@ namespace ContactBook.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("Favourite")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -188,6 +197,9 @@ namespace ContactBook.Migrations
 
                     b.Property<string>("ImageType")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastContact")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastName")
                         .IsRequired()

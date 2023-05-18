@@ -40,7 +40,7 @@ namespace ContactBook.Models
         [Required]
         public string? City { get; set; }
 
-        public Counties County { get; set; }
+        public Counties? County { get; set; }
 
         [Required]
         [Display(Name = "Post Code")]
@@ -64,7 +64,7 @@ namespace ContactBook.Models
         public bool Favourite { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime LastContact { get; set; }
+        public DateTime? LastContact { get; set; }
 
         // image properties
         public byte[]? ImageData { get; set; }

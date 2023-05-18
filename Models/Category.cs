@@ -19,7 +19,7 @@ namespace ContactBook.Models
         public bool Favourite { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime LastContact { get; set; }
+        public DateTime? LastContact { get; set; }
 
         // image properties
         public byte[]? ImageData { get; set; }

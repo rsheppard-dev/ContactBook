@@ -7,6 +7,7 @@ using ContactBook.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using ContactBook.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ContactBook.Categories
 {
@@ -15,17 +16,19 @@ namespace ContactBook.Categories
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly IImageService _imageService;
+        private readonly IEmailSender _emailService;
 
-        public CategoriesController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService)
+        public CategoriesController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService, IEmailSender emailService)
         {
             _context = context;
             _userManager = userManager;
             _imageService = imageService;
+            _emailService = emailService;
         }
 
         // GET: Categories
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string swalMessage = null)
         {
             string appUserId = _userManager.GetUserId(User);
 
@@ -34,11 +37,13 @@ namespace ContactBook.Categories
                 .Include(c => c.AppUser)
                 .OrderBy(c => c.Name)
                 .ToListAsync();
-                
+
+            ViewData["SwalMessage"] = swalMessage;   
             return View(categories);
         }
 
         // GET: SearchContacts
+        [Authorize]
         public IActionResult SearchContacts(string searchString)
         {
             string appUserId = _userManager.GetUserId(User);
@@ -66,7 +71,7 @@ namespace ContactBook.Categories
             return View(nameof(Index), categories);
         }
 
-        // GET: EmailCategory
+        // GET: EmailCategory/5
         [Authorize]
         public async Task<IActionResult> EmailCategory(int id)
         {
@@ -96,24 +101,26 @@ namespace ContactBook.Categories
             return View(model);
         }
 
-        // GET: Categories/Details/5
+        // POST: EmailCategory/5
         [Authorize]
-        public async Task<IActionResult> Details(int? id)
+        [HttpPost]
+        public async Task<IActionResult> EmailCategory(EmailCategoryViewModel model)
         {
-            if (id == null || _context.Categories == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                try
+                {
+                    await _emailService.SendEmailAsync(model.EmailData!.EmailAddress, model.EmailData.Subject, model.EmailData.Body);
+                    return RedirectToAction("Index", "Categories", new { swalMessage = "Success: Email sent!" });
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index", "Categories", new { swalMessage = "Error: Failed to send message!" });
+                    throw;
+                }
             }
-
-            var category = await _context.Categories
-                .Include(c => c.AppUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            
+            return View(model);
         }
 
         // GET: Categories/Create
@@ -228,9 +235,10 @@ namespace ContactBook.Categories
                 return NotFound();
             }
 
+            string appUserId = _userManager.GetUserId(User);
+
             var category = await _context.Categories
-                .Include(c => c.AppUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == appUserId);
             if (category == null)
             {
                 return NotFound();
@@ -244,17 +252,17 @@ namespace ContactBook.Categories
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Categories == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
-            }
-            var category = await _context.Categories.FindAsync(id);
+            string appUserId = _userManager.GetUserId(User);
+
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == appUserId);
+
             if (category != null)
             {
                 _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

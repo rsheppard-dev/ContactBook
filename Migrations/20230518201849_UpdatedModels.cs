@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ContactBook.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class UpdatedModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -164,7 +164,11 @@ namespace ContactBook.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AppUserId = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Favourite = table.Column<bool>(type: "boolean", nullable: false),
+                    LastContact = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ImageData = table.Column<byte[]>(type: "bytea", nullable: true),
+                    ImageType = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -190,11 +194,13 @@ namespace ContactBook.Migrations
                     Address1 = table.Column<string>(type: "text", nullable: false),
                     Address2 = table.Column<string>(type: "text", nullable: true),
                     City = table.Column<string>(type: "text", nullable: false),
-                    County = table.Column<int>(type: "integer", nullable: false),
+                    County = table.Column<int>(type: "integer", nullable: true),
                     PostCode = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     PhoneNumber = table.Column<string>(type: "text", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Favourite = table.Column<bool>(type: "boolean", nullable: false),
+                    LastContact = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ImageData = table.Column<byte[]>(type: "bytea", nullable: true),
                     ImageType = table.Column<string>(type: "text", nullable: true)
                 },

@@ -6,7 +6,6 @@ namespace ContactBook.Models
     {
         [Required]
         [Display(Name = "To")]
-        [EmailAddress]
         public string EmailAddress { get; set; } = "";
         
         [Required]

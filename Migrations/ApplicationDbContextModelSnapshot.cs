@@ -132,7 +132,7 @@ namespace ContactBook.Migrations
                     b.Property<string>("ImageType")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("LastContact")
+                    b.Property<DateTime?>("LastContact")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
@@ -172,7 +172,7 @@ namespace ContactBook.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("County")
+                    b.Property<int?>("County")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Created")
@@ -196,7 +196,7 @@ namespace ContactBook.Migrations
                     b.Property<string>("ImageType")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("LastContact")
+                    b.Property<DateTime?>("LastContact")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastName")
