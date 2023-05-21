@@ -1,0 +1,12 @@
+@model ContactBook.Models.CustomError
+
+@{
+    ViewData["Title"] = $"Error: {Model.Status}";
+}
+
+<section>  
+    <h1 class="uppercase font-bold text-primary text-2xl">Oops... something went wrong.</h1>
+    <h2 class="uppercase text-red-600 font-semibold text-lg mb-5">Error: @Model.Status</h2>
+    <p class="text-dark mb-10">@Model.Message</p>
+    <a asp-action="Index" asp-controller="Home" class="font-bold text-dark hover:underline">Go back to the homepage.</a>
+</section>

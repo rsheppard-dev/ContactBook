@@ -22,7 +22,6 @@ namespace ContactBook.Services
             MimeMessage newEmail = new();
 
             newEmail.Sender = MailboxAddress.Parse(emailSender);
-            
 
             foreach (var emailAddress in email.Split(";") )
             {

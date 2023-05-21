@@ -18,6 +18,25 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("/Home/HandleError/{status:int}")]
+    public IActionResult HandleError(int status)
+    {
+        var customError = new CustomError() {
+            Status = status
+        };
+
+        if (status == 404)
+        {
+            customError.Message = "Sorry, the page you are looking for might have been removed, had its name changed or is temporarily unavailable.";
+        }
+        else
+        {
+            customError.Message = "Sorry, something went wrong.";
+        }
+
+        return View("~/Views/Shared/CustomError.cshtml", customError);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
