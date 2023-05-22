@@ -9,19 +9,15 @@
     }
 }
 
-<h1>Manage your account</h1>
+<h1 class="uppercase font-bold text-primary text-2xl mb-5">Manage your account</h1>
 
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
-    </div>
+<div class="flex flex-col sm:flex-row gap-10">
+    <aisde>
+        <partial name="_ManageNav" />
+    </aisde>
+    <section class="w-full">
+        @RenderBody()
+    </section>
 </div>
 
 @section Scripts {

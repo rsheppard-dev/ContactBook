@@ -2,7 +2,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-	content: ['./Areas/**/*.cshtml', './Views/**/*.cshtml'],
+	content: ['./Areas/**/*.{cshtml,cs}', './Views/**/*.{cshtml,cs}'],
 	theme: {
 		container: {
 			padding: {

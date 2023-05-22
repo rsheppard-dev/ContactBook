@@ -5,25 +5,24 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h2 class="uppercase font-bold text-dark mb-5">@ViewData["Title"]</h2>
+<hr class="mb-5" />
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Username" class="form-control" disabled />
-                <label asp-for="Username" class="form-label"></label>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-        </form>
+<form id="profile-form" method="post" class="space-y-4">
+    <div asp-validation-summary="ModelOnly" class="text-red-600 italic text-xs"></div>
+    <div class="flex flex-col gap-2">
+        <label asp-for="Username" class="uppercase text-dark font-bold text-sm"></label>
+        <input asp-for="Username" disabled />
     </div>
-</div>
+    <div class="flex flex-col gap-2">
+        <label asp-for="Input.PhoneNumber" class="uppercase text-dark font-bold text-sm"></label>
+        <input asp-for="Input.PhoneNumber" />
+        <span asp-validation-for="Input.PhoneNumber" class="text-red-600 italic text-xs"></span>
+    </div>
+    <div class="flex sm:justify-end">
+        <button id="update-profile-button" type="submit" class="btn-primary w-full sm:w-fit">Save</button>
+    </div>
+</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

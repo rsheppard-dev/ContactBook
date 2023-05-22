@@ -42,7 +42,7 @@
     [multiple],
     textarea,
     select {
-		@apply rounded leading-tight enabled:focus:outline-none enabled:focus:ring-1 enabled:focus:ring-primary enabled:focus:border-primary;
+		@apply rounded leading-tight enabled:focus:outline-none enabled:focus:ring-1 enabled:focus:ring-primary enabled:focus:border-primary disabled:bg-gray-200;
 	}
 }
 
