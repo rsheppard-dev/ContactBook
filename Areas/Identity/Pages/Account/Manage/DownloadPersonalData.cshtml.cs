@@ -59,6 +59,8 @@ namespace ContactBook.Areas.Identity.Pages.Account.Manage
                 personalData.Add($"{l.LoginProvider} external login provider key", l.ProviderKey);
             }
 
+            personalData.Add("First Name", user.FirstName);
+            personalData.Add("Last Name", user.LastName);
             personalData.Add($"Authenticator Key", await _userManager.GetAuthenticatorKeyAsync(user));
 
             Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalData.json");

@@ -31,7 +31,7 @@ namespace ContactBook.Contacts
 
         // GET: Contacts
         [Authorize]
-        public IActionResult Index(int categoryId, string swalMessage = null)
+        public IActionResult Index(int categoryId, string? swalMessage = null)
         {
             ViewData["SwalMessage"] = swalMessage;
             

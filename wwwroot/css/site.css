@@ -44,19 +44,23 @@
     select {
 		@apply rounded leading-tight enabled:focus:outline-none enabled:focus:ring-1 enabled:focus:ring-primary enabled:focus:border-primary disabled:bg-gray-200;
 	}
+
+	[type='checkbox'] {
+		@apply text-primary focus:ring-primary rounded;
+	}
 }
 
 @layer components {
 	.btn-primary {
-		@apply rounded bg-primary text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer;
+		@apply block rounded bg-primary text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer whitespace-nowrap;
 	}
 
 	.btn-dark {
-		@apply rounded bg-darkest text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer;
+		@apply block rounded bg-darkest text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer whitespace-nowrap;
 	}
 
 	.btn-danger {
-		@apply rounded bg-red-600 text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer;
+		@apply block rounded bg-red-600 text-light px-3 py-2 hover:bg-opacity-80 transition-opacity cursor-pointer;
 	}
 }
 

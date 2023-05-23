@@ -28,7 +28,7 @@ namespace ContactBook.Categories
 
         // GET: Categories
         [Authorize]
-        public async Task<IActionResult> Index(string swalMessage = null)
+        public async Task<IActionResult> Index(string? swalMessage = null)
         {
             string appUserId = _userManager.GetUserId(User);
 

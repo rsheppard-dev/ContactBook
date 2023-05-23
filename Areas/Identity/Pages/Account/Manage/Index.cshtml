@@ -7,7 +7,7 @@
 
 <h2 class="uppercase font-bold text-dark mb-5">@ViewData["Title"]</h2>
 <hr class="mb-5" />
-<partial name="_StatusMessage" for="StatusMessage" />
+
 <form id="profile-form" method="post" class="space-y-4">
     <div asp-validation-summary="ModelOnly" class="text-red-600 italic text-xs"></div>
     <div class="flex flex-col gap-2">
@@ -15,11 +15,22 @@
         <input asp-for="Username" disabled />
     </div>
     <div class="flex flex-col gap-2">
+        <label asp-for="Input.FirstName" class="uppercase text-dark font-bold text-sm"></label>
+        <input asp-for="Input.FirstName" />
+        <span asp-validation-for="Input.FirstName" class="text-red-600 italic text-xs"></span>
+    </div>
+    <div class="flex flex-col gap-2">
+        <label asp-for="Input.LastName" class="uppercase text-dark font-bold text-sm"></label>
+        <input asp-for="Input.LastName" />
+        <span asp-validation-for="Input.LastName" class="text-red-600 italic text-xs"></span>
+    </div>
+    <div class="flex flex-col gap-2">
         <label asp-for="Input.PhoneNumber" class="uppercase text-dark font-bold text-sm"></label>
         <input asp-for="Input.PhoneNumber" />
         <span asp-validation-for="Input.PhoneNumber" class="text-red-600 italic text-xs"></span>
     </div>
-    <div class="flex sm:justify-end">
+    <div class="flex flex-col sm:flex-row justify-end sm:items-center flex-wrap">
+        <span class="flex-grow"><partial name="_StatusMessage" for="StatusMessage" /></span>
         <button id="update-profile-button" type="submit" class="btn-primary w-full sm:w-fit">Save</button>
     </div>
 </form>
