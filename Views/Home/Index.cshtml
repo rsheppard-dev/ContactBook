@@ -8,9 +8,11 @@
 <section class="grid grid-cols-2 gap-5">
     @if (SignInManager.IsSignedIn(User))
     {
-    <div>
-        <h1 class="font-bold mb-3 text-4xl">Welcome!</h1>
-    </div>
+        var user = await SignInManager.UserManager.GetUserAsync(User);
+
+        <div class="col-span-2">
+            <h1 class="font-bold mb-3 text-2xl">Welcome @user.FullName!</h1>
+        </div>
     } else {
     <div class="flex flex-col justify-center col-span-2 md:col-span-1">
         <h1 class="font-bold mb-3 text-4xl">Manage all your contacts in one place</h1>
