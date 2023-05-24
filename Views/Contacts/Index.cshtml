@@ -19,9 +19,9 @@
     </a>
 </div>
 
-<div class="flex sm:flex-col lg:flex-row flex-wrap justify-between sm:justify-start gap-3 mb-5 sm:mb-16 lg:mb-5">
-    <form asp-action="SearchContacts" asp-controller="Contacts" class="flex items-center gap-1">
-        <input type="search" name="searchString" placeholder="Search contacts" class="w-full lg:w-auto">
+<div class="flex flex-col md:flex-row gap-3 mb-5 md:mb-16 lg:mb-5">
+    <form asp-action="SearchContacts" asp-controller="Contacts" class="flex items-center gap-1 w-full">
+        <input type="search" name="searchString" placeholder="Search contacts" class="w-full">
         <button type="submit" title="Search Contacts" class="h-full btn-primary text-sm flex items-center gap-2">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" title="Search Contacts" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -31,14 +31,23 @@
         </button>
     </form>
 
-    <form asp-action="Index" asp-controller="Contacts" class="flex items-center gap-1">
-        <select name="categoryId" asp-items="@ViewBag.CategoryId" onchange="this.form.submit()" onfocus="this.selectedIndex=-1;this.blur();" class="w-full lg:w-auto">
+    <form asp-action="Index" asp-controller="Contacts" class="flex items-center gap-1 w-full">
+        <select name="categoryId" asp-items="@ViewBag.CategoryId" onchange="this.form.submit()" onfocus="this.selectedIndex=-1;this.blur();" class="w-full">
             <option>All Contacts</option>
         </select>
     </form>
 </div>
 
 <div class="space-y-16">
+    @if (!Model.Any())
+    {
+    <div class="space-y-4">
+        <p class="text-dark">You have not setup any contacts yet.</p>
+        <p><a asp-action="Create" class="font-semibold hover:underline">Click here to add your first contact</a>.</p>
+    </div>
+    }
+    else
+    {
     @foreach (var contact in Model) {
     <div>
         <div class="sm:hidden rounded-t-lg overflow-hidden">
@@ -101,6 +110,7 @@
             </div>
         </div>
     </div>
+    }
     }
 </div>
 

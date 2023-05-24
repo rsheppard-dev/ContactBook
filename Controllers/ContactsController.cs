@@ -138,7 +138,19 @@ namespace ContactBook.Contacts
             {
                 try
                 {
+                    var contact = await _context.Contacts.FirstOrDefaultAsync(c => c.Email == model.EmailData!.EmailAddress)!;
+
+                    if(contact == null)
+                    {
+                        return NotFound();
+                    }
+
                     await _emailService.SendEmailAsync(model.EmailData!.EmailAddress, model.EmailData.Subject, model.EmailData.Body);
+
+                    // update last contact
+                    contact.LastContact = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    _context.Update(contact);
+                    _context.SaveChanges();
 
                     return RedirectToAction("Index", "Contacts", new { swalMessage = "Success: Email sent!"});
                 }

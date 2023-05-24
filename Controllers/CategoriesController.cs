@@ -42,6 +42,18 @@ namespace ContactBook.Categories
             return View(categories);
         }
 
+        // PATCH: ToggleFavourite
+        [Authorize]
+        public ActionResult ToggleFavourite(int id)
+        {
+            var category = _context.Categories.Find(id)!;
+            category.Favourite = !category.Favourite;
+            _context.Update(category);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         // GET: SearchContacts
         [Authorize]
         public IActionResult SearchContacts(string searchString)
@@ -110,7 +122,20 @@ namespace ContactBook.Categories
             {
                 try
                 {
+                    var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == model.EmailData!.GroupName)!;
+                    
+                    if(category == null)
+                    {
+                        return NotFound();
+                    }
+
                     await _emailService.SendEmailAsync(model.EmailData!.EmailAddress, model.EmailData.Subject, model.EmailData.Body);
+                    
+                    // update last contact
+                    category.LastContact = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    _context.Update(category);
+                    _context.SaveChanges();
+                    
                     return RedirectToAction("Index", "Categories", new { swalMessage = "Success: Email sent!" });
                 }
                 catch (Exception)

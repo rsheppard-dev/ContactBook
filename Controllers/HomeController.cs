@@ -1,20 +1,55 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ContactBook.Models;
+using ContactBook.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContactBook.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly ApplicationDbContext _context;
+    private readonly UserManager<AppUser> _userManager;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<AppUser> userManager)
     {
         _logger = logger;
+        _context = context;
+        _userManager = userManager;
     }
 
     public IActionResult Index()
     {
+        string appUserId = _userManager.GetUserId(User);
+
+        var favouriteCategories = new List<Category>();
+        var recentContacts = new List<Contact>();
+
+        if (appUserId != null)
+        {
+            // get user and their contacts
+            AppUser appUser = _context.Users
+                .Include(u => u.Contacts)
+                .Include(u => u.Categories)
+                .FirstOrDefault(u => u.Id == appUserId)!;
+
+            favouriteCategories = appUser.Categories
+                .Where(c => c.Favourite == true)
+                .OrderBy(c => c.Name)
+                .ToList();
+
+            recentContacts = appUser.Contacts
+                .Where(c => c.LastContact != null)
+                .OrderByDescending(c => c.LastContact)
+                .Take(5)
+                .ToList();
+        }
+
+        ViewData["favouriteCategories"] = favouriteCategories;
+        ViewData["recentContacts"] = recentContacts;
+
         return View();
     }
 
