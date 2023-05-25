@@ -54,16 +54,15 @@ namespace ContactBook.Categories
             return RedirectToAction("Index");
         }
 
-        // GET: SearchContacts
+        // GET: SearchCategories
         [Authorize]
-        public IActionResult SearchContacts(string searchString)
+        public IActionResult SearchCategories(string searchString)
         {
             string appUserId = _userManager.GetUserId(User);
             var categories = new List<Category>();
 
             AppUser appUser = _context.Users
                 .Include(c => c.Categories)
-                .ThenInclude(c => c.Contacts)
                 .FirstOrDefault(u => u.Id == appUserId)!;
 
             if (String.IsNullOrEmpty(searchString))

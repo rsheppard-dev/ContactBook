@@ -67,6 +67,18 @@ namespace ContactBook.Contacts
             return View(contacts);
         }
 
+        // PATCH: ToggleFavourite
+        [Authorize]
+        public ActionResult ToggleFavourite(int id)
+        {
+            var category = _context.Contacts.Find(id)!;
+            category.Favourite = !category.Favourite;
+            _context.Update(category);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         // GET: SearchContacts
         public IActionResult SearchContacts(string searchString)
         {

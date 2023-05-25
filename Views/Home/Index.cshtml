@@ -17,13 +17,18 @@
             <div class="flex gap-5 flex-wrap">
                 @if (Model.FavouriteCategories != null && Model.FavouriteCategories.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-2 text-dark">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full md:w-fit">
                 <h2 class="font-bold">Favourite Categories</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
                 @foreach (var category in Model.FavouriteCategories)
                 {
-                    <li>@category.Name</li>
+                    <li class="flex items-center justify-between">
+                        <span>@category.Name</span>
+                        <a asp-action="EmailCategory" asp-controller="Categories" asp-route-id="@category.Id" title="Email @category.Name">
+                            <img src="~/images/message.svg" alt="Email" class="w-8 h-8 hover:scale-125 transition-transform">
+                        </a>
+                    </li>
                 }
                 </ul>
                 </div>
@@ -37,7 +42,12 @@
                 <ul>
                 @foreach (var contact in Model.FavouriteContacts)
                 {
-                    <li>@contact.FullName</li>
+                    <li class="flex items-center justify-between">
+                        <span>@contact.FullName</span>
+                        <a asp-action="EmailContact" asp-controller="Contacts" asp-route-id="@contact.Id" title="Email @contact.FullName">
+                            <img src="~/images/message.svg" alt="Email" class="w-8 h-8 hover:scale-125 transition-transform">
+                        </a>
+                    </li>
                 }
                 </ul>
                 </div>
@@ -51,7 +61,12 @@
                 <ul>
                 @foreach (var category in Model.RecentCategories)
                 {
-                    <li>@category.Name</li>
+                    <li class="flex items-center justify-between">
+                        <span>@category.Name</span>
+                        <a asp-action="EmailCategory" asp-controller="Categories" asp-route-id="@category.Id" title="Email @category.Name">
+                            <img src="~/images/message.svg" alt="Email" class="w-8 h-8 hover:scale-125 transition-transform">
+                        </a>
+                    </li>
                 }
                 </ul>
                 </div>
@@ -65,7 +80,12 @@
                 <ul>
                 @foreach (var contact in Model.RecentContacts)
                 {
-                    <li>@contact.FullName</li>
+                    <li class="flex items-center justify-between">
+                        <span>@contact.FullName</span>
+                        <a asp-action="EmailContact" asp-controller="Contacts" asp-route-id="@contact.Id" title="Email @contact.FullName">
+                            <img src="~/images/message.svg" alt="Email" class="w-8 h-8 hover:scale-125 transition-transform">
+                        </a>
+                    </li>
                 }
                 </ul>
                 </div>
