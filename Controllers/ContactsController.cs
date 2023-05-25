@@ -46,13 +46,25 @@ namespace ContactBook.Contacts
 
             var categories = appUser.Categories;
 
-            if (categoryId == 0) {
+            if (categoryId == 0)
+            {
                 // if all contacts selected
                 contacts = appUser.Contacts
                     .OrderBy(c => c.LastName)
                     .ThenBy(c => c.FirstName)
                     .ToList();
-            } else {
+            } 
+            else if (categoryId == 999)
+            {
+                // if favourite contacts selected
+                contacts = appUser.Contacts
+                    .Where(c => c.Favourite)
+                    .OrderBy(c => c.LastName)
+                    .ThenBy(c => c.FirstName)
+                    .ToList();
+            }
+            else
+            {
                 // if specific category filter applied
                 contacts = appUser.Categories
                     .FirstOrDefault(c => c.Id == categoryId)!
