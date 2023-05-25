@@ -14,16 +14,16 @@
     
         <div class="col-span-2">
             <h1 class="font-bold mb-10 text-2xl">Welcome @user.FullName!</h1>
-            <div class="flex gap-5 flex-wrap">
+            <div class="flex flex-col lg:flex-row gap-5">
                 @if (Model.FavouriteCategories != null && Model.FavouriteCategories.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full md:w-fit">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full lg:w-1/2 xl:1/3">
                 <h2 class="font-bold">Favourite Categories</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
                 @foreach (var category in Model.FavouriteCategories)
                 {
-                    <li class="flex items-center justify-between">
+                    <li class="flex items-center gap-10 justify-between">
                         <span>@category.Name</span>
                         <a asp-action="EmailCategory" asp-controller="Categories" asp-route-id="@category.Id" title="Email @category.Name">
                             <img src="~/images/message.svg" alt="Email" class="w-8 h-8 hover:scale-125 transition-transform">
@@ -36,13 +36,13 @@
 
                 @if (Model.FavouriteContacts != null && Model.FavouriteContacts.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-2 text-dark">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full lg:w-1/2 xl:1/3">
                 <h2 class="font-bold">Favourite Contacts</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
                 @foreach (var contact in Model.FavouriteContacts)
                 {
-                    <li class="flex items-center justify-between">
+                    <li class="flex items-center gap-10 justify-between">
                         <span>@contact.FullName</span>
                         <a asp-action="EmailContact" asp-controller="Contacts" asp-route-id="@contact.Id" title="Email @contact.FullName">
                             <img src="~/images/message.svg" alt="Email" class="w-8 h-8 hover:scale-125 transition-transform">
@@ -55,13 +55,13 @@
 
                 @if (Model.RecentCategories != null && Model.RecentCategories.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-2 text-dark">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full lg:w-1/2 xl:1/3">
                 <h2 class="font-bold">Recent Categories</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
                 @foreach (var category in Model.RecentCategories)
                 {
-                    <li class="flex items-center justify-between">
+                    <li class="flex items-center gap-10 justify-between">
                         <span>@category.Name</span>
                         <a asp-action="EmailCategory" asp-controller="Categories" asp-route-id="@category.Id" title="Email @category.Name">
                             <img src="~/images/message.svg" alt="Email" class="w-8 h-8 hover:scale-125 transition-transform">
@@ -74,13 +74,13 @@
 
                 @if (Model.RecentContacts != null && Model.RecentContacts.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-2 text-dark">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full lg:w-1/2 xl:1/3">
                 <h2 class="font-bold">Recent Contacts</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
                 @foreach (var contact in Model.RecentContacts)
                 {
-                    <li class="flex items-center justify-between">
+                    <li class="flex items-center gap-10 justify-between">
                         <span>@contact.FullName</span>
                         <a asp-action="EmailContact" asp-controller="Contacts" asp-route-id="@contact.Id" title="Email @contact.FullName">
                             <img src="~/images/message.svg" alt="Email" class="w-8 h-8 hover:scale-125 transition-transform">

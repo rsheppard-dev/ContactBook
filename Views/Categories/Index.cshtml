@@ -56,7 +56,7 @@
                     </form>
                 </div>
                 <span class="font-bold text-2xl text-light drop-shadow-md text-center grow flex items-center justify-center">@Html.DisplayFor(modelItem => category.Name)</span>
-                <div class="opacity-0 group-hover:opacity-100 transition-opacity flex justify-end lg:justify-between items-center gap-2">
+                <div class="lg:opacity-0 lg:group-hover:opacity-100 transition-opacity flex justify-end lg:justify-between items-center gap-2">
                     <a asp-action="Edit" asp-route-id="@category.Id" class="bg-darkest p-3 rounded-full">
                         <img src="~/images/edit.svg" alt="Edit" class="w-8 h-8 hover:scale-125 transition-transform">
                     </a>
