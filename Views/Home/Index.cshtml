@@ -1,32 +1,76 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@model ContactBook.Models.ViewModels.HomeViewModel
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
 
 
 @{
     ViewData["Title"] = "Home Page";
-    var favouriteCategories = ViewData["favouriteCategories"] as List<Category>;
 }
 
 <section class="grid grid-cols-2 gap-5">
     @if (SignInManager.IsSignedIn(User))
     {
         var user = await SignInManager.UserManager.GetUserAsync(User);
-
+    
         <div class="col-span-2">
             <h1 class="font-bold mb-10 text-2xl">Welcome @user.FullName!</h1>
-
-            @if (favouriteCategories != null && favouriteCategories.Count != 0)
-            {
-                <div>
-                <h2>Favourite Categories</h2>
+            <div class="flex gap-5 flex-wrap">
+                @if (Model.FavouriteCategories != null && Model.FavouriteCategories.Count != 0)
+                {
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-2 text-dark">
+                <h2 class="font-bold">Favourite Categories</h2>
+                <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
-                @foreach (var category in favouriteCategories)
+                @foreach (var category in Model.FavouriteCategories)
                 {
                     <li>@category.Name</li>
                 }
                 </ul>
+                </div>
+                }
+
+                @if (Model.FavouriteContacts != null && Model.FavouriteContacts.Count != 0)
+                {
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-2 text-dark">
+                <h2 class="font-bold">Favourite Contacts</h2>
+                <hr class="bg-light h-2 rounded-lg border-0" />
+                <ul>
+                @foreach (var contact in Model.FavouriteContacts)
+                {
+                    <li>@contact.FullName</li>
+                }
+                </ul>
+                </div>
+                }
+
+                @if (Model.RecentCategories != null && Model.RecentCategories.Count != 0)
+                {
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-2 text-dark">
+                <h2 class="font-bold">Recent Categories</h2>
+                <hr class="bg-light h-2 rounded-lg border-0" />
+                <ul>
+                @foreach (var category in Model.RecentCategories)
+                {
+                    <li>@category.Name</li>
+                }
+                </ul>
+                </div>
+                }
+
+                @if (Model.RecentContacts != null && Model.RecentContacts.Count != 0)
+                {
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-2 text-dark">
+                <h2 class="font-bold">Recent Contacts</h2>
+                <hr class="bg-light h-2 rounded-lg border-0" />
+                <ul>
+                @foreach (var contact in Model.RecentContacts)
+                {
+                    <li>@contact.FullName</li>
+                }
+                </ul>
+                </div>
+                }
             </div>
-            }
         </div>
     } else {
     <div class="flex flex-col justify-center col-span-2 md:col-span-1">

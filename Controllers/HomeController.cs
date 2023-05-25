@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ContactBook.Models;
+using ContactBook.Models.ViewModels;
 using ContactBook.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +25,10 @@ public class HomeController : Controller
     {
         string appUserId = _userManager.GetUserId(User);
 
+        var favouriteContacts = new List<Contact>();
         var favouriteCategories = new List<Category>();
         var recentContacts = new List<Contact>();
+        var recentCategories= new List<Category>();
 
         if (appUserId != null)
         {
@@ -34,6 +37,12 @@ public class HomeController : Controller
                 .Include(u => u.Contacts)
                 .Include(u => u.Categories)
                 .FirstOrDefault(u => u.Id == appUserId)!;
+
+            favouriteContacts = appUser.Contacts
+                .Where(c => c.Favourite == true)
+                .OrderBy(c => c.LastName)
+                .ThenBy(c => c.FirstName)
+                .ToList();
 
             favouriteCategories = appUser.Categories
                 .Where(c => c.Favourite == true)
@@ -45,12 +54,23 @@ public class HomeController : Controller
                 .OrderByDescending(c => c.LastContact)
                 .Take(5)
                 .ToList();
+
+            recentCategories = appUser.Categories
+                .Where(c => c.LastContact != null)
+                .OrderByDescending(c => c.LastContact)
+                .Take(5)
+                .ToList();
         }
 
-        ViewData["favouriteCategories"] = favouriteCategories;
-        ViewData["recentContacts"] = recentContacts;
+        HomeViewModel model = new HomeViewModel()
+        {
+            FavouriteContacts = favouriteContacts,
+            FavouriteCategories = favouriteCategories,
+            RecentContacts = recentContacts,
+            RecentCategories = recentCategories
+        };
 
-        return View();
+        return View(model);
     }
 
     [Route("/Home/HandleError/{status:int}")]
