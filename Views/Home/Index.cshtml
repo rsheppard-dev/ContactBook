@@ -14,10 +14,10 @@
     
         <div class="col-span-2">
             <h1 class="font-bold mb-10 text-2xl">Welcome @user.FullName!</h1>
-            <div class="flex flex-col lg:flex-row gap-5">
+            <div class="grid grid-cols-12 gap-5">
                 @if (Model.FavouriteCategories != null && Model.FavouriteCategories.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full lg:w-1/2 xl:1/3">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark col-span-12 lg:col-span-6 xl:col-span-4">
                 <h2 class="font-bold">Favourite Categories</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
@@ -36,7 +36,7 @@
 
                 @if (Model.FavouriteContacts != null && Model.FavouriteContacts.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full lg:w-1/2 xl:1/3">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark col-span-12 lg:col-span-6 xl:col-span-4">
                 <h2 class="font-bold">Favourite Contacts</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
@@ -55,7 +55,7 @@
 
                 @if (Model.RecentCategories != null && Model.RecentCategories.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full lg:w-1/2 xl:1/3">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark col-span-12 lg:col-span-6 xl:col-span-4">
                 <h2 class="font-bold">Recent Categories</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>
@@ -74,7 +74,7 @@
 
                 @if (Model.RecentContacts != null && Model.RecentContacts.Count != 0)
                 {
-                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark w-full lg:w-1/2 xl:1/3">
+                <div class="bg-mid px-3 py-2 rounded-lg space-y-4 text-dark col-span-12 lg:col-span-6 xl:col-span-4">
                 <h2 class="font-bold">Recent Contacts</h2>
                 <hr class="bg-light h-2 rounded-lg border-0" />
                 <ul>

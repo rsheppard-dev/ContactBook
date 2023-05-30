@@ -1,3 +1,4 @@
+using ContactBook.Data;
 using ContactBook.Models;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -18,6 +19,8 @@ namespace ContactBook.Services
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
+            var displayName = _mailSettings.DisplayName ?? Environment.GetEnvironmentVariable("DisplayName");
+
 
             MimeMessage newEmail = new();
 
