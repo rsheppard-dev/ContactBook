@@ -97,7 +97,7 @@
         <h1 class="font-bold mb-3 text-4xl">Manage all your contacts in one place</h1>
         <h2 class="font-semibold mb-4 text-xl">Your digital address book</h2>
         <div class="flex gap-2">
-            <a href="#" class="btn-dark text-lg">Try Demo</a>
+            <button type="button" class="btn-dark text-lg" onclick="showDemoDetails()">Try Demo</button>
             <a asp-area="Identity" asp-page="/Account/Register" class="btn-primary text-lg">Sign Up</a>
         </div>
     </div>
@@ -107,3 +107,35 @@
     </div>
     }
 </section>
+
+@section scripts{
+    <!--Sweet Alerts-->
+    <script>
+        function showDemoDetails() {
+            Swal.fire({
+            title: '<strong>Demo Login</strong>',
+            icon: 'info',
+            html:
+                '<div class="space-y-4">' +
+                    '<b>Email:</b> demo@contactbook.co.uk<br>' +
+                    '<b>Password:</b> DemoPa$5word' +
+                    '<p>Use the credentials above to test out Contact Book without having to sign up.</p>' +
+                '</div>',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText:
+                'Go to Login',
+            confirmButtonAriaLabel: 'Go to demo login!',
+            cancelButtonText:
+                'Close',
+            cancelButtonAriaLabel: 'Close'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect the user to the new page
+                    window.location = '/Identity/Account/Login';
+                }
+            });
+        }
+    </script>
+}

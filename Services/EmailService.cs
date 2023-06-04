@@ -21,7 +21,6 @@ namespace ContactBook.Services
             var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
             var displayName = _mailSettings.DisplayName ?? Environment.GetEnvironmentVariable("DisplayName");
 
-
             MimeMessage newEmail = new();
 
             newEmail.Sender = MailboxAddress.Parse(emailSender);
