@@ -47,5 +47,25 @@
 </section>
 
 @section Scripts {
+    <script>
+        const demoEmail = 'demo@contactbook.co.uk';
+        const demoPassword = 'DemoPa$5word';
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const email = urlParams.get('email');
+        const password = urlParams.get('password');
+
+        const loginForm = document.getElementById('account');
+        const emailInput = document.getElementById('Input_Email');
+        const passwordInput = document.getElementById('Input_Password');
+
+        emailInput.value = email;
+        passwordInput.value = password;
+
+        if (email === demoEmail && password === demoPassword)
+            loginForm.submit()
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }

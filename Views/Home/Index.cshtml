@@ -111,21 +111,24 @@
 @section scripts{
     <!--Sweet Alerts-->
     <script>
+        const email = 'demo@contactbook.co.uk';
+        const password = 'DemoPa$5word';
+
         function showDemoDetails() {
             Swal.fire({
             title: '<strong>Demo Login</strong>',
             icon: 'info',
             html:
                 '<div class="space-y-4">' +
-                    '<b>Email:</b> demo@contactbook.co.uk<br>' +
-                    '<b>Password:</b> DemoPa$5word' +
+                    `<b>Email:</b> ${email}<br>` +
+                    `<b>Password:</b> ${password}` +
                     '<p>Use the credentials above to test out Contact Book without having to sign up.</p>' +
                 '</div>',
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: false,
             confirmButtonText:
-                'Go to Login',
+                'Open Demo',
             confirmButtonAriaLabel: 'Go to demo login!',
             cancelButtonText:
                 'Close',
@@ -133,7 +136,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Redirect the user to the new page
-                    window.location = '/Identity/Account/Login';
+                    window.location = `/Identity/Account/Login?email=${email}&password=${password}`;
                 }
             });
         }
