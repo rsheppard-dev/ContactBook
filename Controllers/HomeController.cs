@@ -62,7 +62,7 @@ public class HomeController : Controller
                 .ToList();
         }
 
-        HomeViewModel model = new HomeViewModel()
+        HomeViewModel model = new()
         {
             FavouriteContacts = favouriteContacts,
             FavouriteCategories = favouriteCategories,

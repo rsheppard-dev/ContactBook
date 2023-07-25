@@ -137,14 +137,14 @@ namespace ContactBook.Contacts
                 return NotFound(contact);
             }
 
-            EmailData emailData = new EmailData()
+            EmailData emailData = new()
             {
                 EmailAddress = contact.Email!,
                 FirstName = contact.FirstName,
                 LastName = contact.LastName
             };
 
-            EmailContactViewModel model = new EmailContactViewModel()
+            EmailContactViewModel model = new()
             {
                 Contact = contact,
                 EmailData = emailData
