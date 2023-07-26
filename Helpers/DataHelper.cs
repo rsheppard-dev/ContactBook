@@ -117,13 +117,9 @@ namespace ContactBook.Helpers
                 await context.Categories.AddRangeAsync(categories.Where(c => !dbCategories.Contains(c.Name)));
                 await context.SaveChangesAsync();
 
-                // Get a list of IDs from the categories list
-                List<int> categoryIds = categories.Select(c => c.Id).ToList();
-
-                // Set category1Id, category2Id, and category3Id based on the newly added categories
-                category1Id = categoryIds[0];
-                category2Id = categoryIds[1];
-                category3Id = categoryIds[2];
+                category1Id = context.Categories.FirstOrDefault(category => category.Name == categories[0].Name)?.Id ?? throw new Exception("Failed to get categoryId");
+                category2Id = context.Categories.FirstOrDefault(category => category.Name == categories[1].Name)?.Id ?? throw new Exception("Failed to get categoryId");
+                category3Id = context.Categories.FirstOrDefault(category => category.Name == categories[2].Name)?.Id ?? throw new Exception("Failed to get categoryId");
             }
             catch (Exception ex)
             {
@@ -269,16 +265,13 @@ namespace ContactBook.Helpers
                 await context.Contacts.AddRangeAsync(contacts.Where(c => !dbContacts.Contains(c.Email)));
                 await context.SaveChangesAsync();
 
-                // Get a list of IDs from the contacts list
-                List<int> contactIds = contacts.Select(c => c.Id).ToList();
-
-                int contact1Id = contactIds[0];
-                int contact2Id = contactIds[1];
-                int contact3Id = contactIds[2];
-                int contact4Id = contactIds[3];
-                int contact5Id = contactIds[4];
-                int contact6Id = contactIds[5];
-                int contact7Id = contactIds[6];
+                int contact1Id = context.Contacts.FirstOrDefault(contact => contact.Email == contacts[0].Email)?.Id ?? throw new Exception("Failed to get contactId");;
+                int contact2Id = context.Contacts.FirstOrDefault(contact => contact.Email == contacts[1].Email)?.Id ?? throw new Exception("Failed to get contactId");;
+                int contact3Id = context.Contacts.FirstOrDefault(contact => contact.Email == contacts[2].Email)?.Id ?? throw new Exception("Failed to get contactId");;
+                int contact4Id = context.Contacts.FirstOrDefault(contact => contact.Email == contacts[3].Email)?.Id ?? throw new Exception("Failed to get contactId");;
+                int contact5Id = context.Contacts.FirstOrDefault(contact => contact.Email == contacts[4].Email)?.Id ?? throw new Exception("Failed to get contactId");;
+                int contact6Id = context.Contacts.FirstOrDefault(contact => contact.Email == contacts[5].Email)?.Id ?? throw new Exception("Failed to get contactId");;
+                int contact7Id = context.Contacts.FirstOrDefault(contact => contact.Email == contacts[6].Email)?.Id ?? throw new Exception("Failed to get contactId");;
 
                 // add contacts to family category
                 await addressBookService.AddContactToCategoryAsync(category1Id, contact1Id);
