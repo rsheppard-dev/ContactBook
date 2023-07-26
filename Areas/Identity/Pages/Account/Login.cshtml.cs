@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ContactBook.Helpers;
 
 namespace ContactBook.Areas.Identity.Pages.Account
 {
@@ -22,13 +23,15 @@ namespace ContactBook.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IHost _app;
         private readonly IConfiguration _configuration;
 
-        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
+        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger, IConfiguration configuration, IHost app)
         {
             _signInManager = signInManager;
             _logger = logger;
             _configuration = configuration;
+            _app = app;
         }
 
         /// <summary>
@@ -104,7 +107,7 @@ namespace ContactBook.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string demoLogin, string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
 
@@ -118,11 +121,12 @@ namespace ContactBook.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    await DataHelper.ManageDataAsync(_app);
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {

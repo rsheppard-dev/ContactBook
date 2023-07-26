@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ContactBook.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using ContactBook.Helpers;
 
 namespace ContactBook.Areas.Identity.Pages.Account
 {
@@ -19,15 +20,18 @@ namespace ContactBook.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IHost _app;
         private readonly ILogger<LoginWith2faModel> _logger;
 
         public LoginWith2faModel(
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
+            IHost app,
             ILogger<LoginWith2faModel> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _app = app;
             _logger = logger;
         }
 
@@ -114,6 +118,7 @@ namespace ContactBook.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
+                await DataHelper.ManageDataAsync(_app);
                 return LocalRedirect(returnUrl);
             }
             else if (result.IsLockedOut)

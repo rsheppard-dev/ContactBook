@@ -13,6 +13,7 @@ namespace ContactBook.Helpers
         private static int category1Id;
         private static int category2Id;
         private static int category3Id;
+        
         public static async Task ManageDataAsync(IHost host)
         {
             using var svcScope = host.Services.CreateScope();
