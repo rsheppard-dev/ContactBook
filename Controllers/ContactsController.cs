@@ -194,7 +194,10 @@ namespace ContactBook.Contacts
         {
             string appUserId = _userManager.GetUserId(User);
 
-            ViewData["CountiesList"] = new SelectList(Enum.GetValues(typeof(Counties)).Cast<Counties>().ToList());
+            List<Counties> countiesList = Enum.GetValues(typeof(Counties)).Cast<Counties>().ToList();
+            IEnumerable<string> counties = countiesList.Select(county => county.ToString().Replace("_", " "));
+
+            ViewData["CountiesList"] = new SelectList(counties);
             ViewData["CategoryList"] = new MultiSelectList(await _addressBookService.GetUserCategoriesAsync(appUserId), "Id", "Name");
 
             return View();
@@ -260,7 +263,10 @@ namespace ContactBook.Contacts
                 return NotFound();
             }
             
-            ViewData["CountiesList"] = new SelectList(Enum.GetValues(typeof(Counties)).Cast<Counties>().ToList());
+            List<Counties> countiesList = Enum.GetValues(typeof(Counties)).Cast<Counties>().ToList();
+            IEnumerable<string> counties = countiesList.Select(county => county.ToString().Replace("_", " "));
+
+            ViewData["CountiesList"] = new SelectList(counties);
             ViewData["CategoryList"] = new MultiSelectList(await _addressBookService.GetUserCategoriesAsync(appUserId), "Id", "Name", await _addressBookService.GetContactCategoryIdsAsync(contact.Id));
 
             return View(contact);

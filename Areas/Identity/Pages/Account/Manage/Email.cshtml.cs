@@ -145,6 +145,11 @@ namespace ContactBook.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            if (user.UserName == "demo@contactbook.co.uk")
+            {
+                return NotFound($"Unable to change email of demo user.");
+            }
+
             if (!ModelState.IsValid)
             {
                 await LoadAsync(user);

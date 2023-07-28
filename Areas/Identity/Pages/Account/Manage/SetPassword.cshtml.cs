@@ -96,6 +96,11 @@ namespace ContactBook.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            if (user.UserName == "demo@contactbook.co.uk")
+            {
+                return NotFound($"Unable to change password of demo user.");
+            }
+
             var addPasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
             if (!addPasswordResult.Succeeded)
             {

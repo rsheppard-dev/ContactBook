@@ -50,7 +50,9 @@
     else
     {
     @foreach (var contact in Model) {
-    var favouriteClass = contact.Favourite ? "fill-amber-400 stroke-amber-500" : "stroke-dark";
+    string favouriteClass = contact.Favourite ? "fill-amber-400 stroke-amber-500" : "stroke-dark";
+    string? county = contact.County.ToString()?.Replace("_", " ");
+
     <div>
         <div class="sm:hidden rounded-t-lg overflow-hidden">
             <img src="@imageService.ConvertByteArrayToFile(contact.ImageData!, contact.ImageType!)" alt="@Html.DisplayFor(modelContact => contact.FullName)" class="object-cover object-center h-40 w-full">
@@ -65,7 +67,7 @@
                     <span class="block">@Html.DisplayFor(modelContact => contact.Address1)</span>
                     <span class="block">@Html.DisplayFor(modelContact => contact.Address2)</span>
                     <span class="block">@Html.DisplayFor(modelContact => contact.City)</span>
-                    <span class="block">@Html.DisplayFor(modelContact => contact.County)</span>
+                    <span class="block">@Html.DisplayFor(modelContact => county)</span>
                     <span class="block">@Html.DisplayFor(modelContact => contact.PostCode)</span>
                 </div>
 

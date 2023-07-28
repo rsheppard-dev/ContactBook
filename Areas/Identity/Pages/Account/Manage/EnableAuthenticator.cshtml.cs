@@ -106,6 +106,11 @@ namespace ContactBook.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            if (user.UserName == "demo@contactbook.co.uk")
+            {
+                return NotFound($"You are not authorised to setup 2FA for a demo user.");
+            }
+
             if (!ModelState.IsValid)
             {
                 await LoadSharedKeyAndQrCodeUriAsync(user);

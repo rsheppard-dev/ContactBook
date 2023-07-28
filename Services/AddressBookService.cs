@@ -75,7 +75,7 @@ namespace ContactBook.Services
 
         public async Task<IEnumerable<Category>> GetUserCategoriesAsync(string userId)
         {
-            List<Category> categories = new List<Category>();
+            List<Category> categories = new();
 
             try
             {
